@@ -1,0 +1,423 @@
+---
+title: "Clase 01"
+subtitle: "Estadística Descriptiva desde 0 en R"
+author: "Sara Acevedo"
+title-slide-attributes:
+    data-background-image: "img/mint-tea.jpeg"
+    data-background-size: contain
+    data-background-opacity: "0.5"
+format:
+  revealjs: 
+    slide-number: true
+    theme: [default, mi_tema.scss]
+from: markdown+emoji
+execute:
+  echo: true
+---
+
+# [Hola!]{style="color: white;float:center;text-align:left;"} {background-color="#56cc9d"} 
+
+{{< fa brands twitter size=1.4xl >}} saryace | {{< fa brands github size=1.4xl >}} Saryace | {{< fa globe size=1.4xl >}} saryace.github.io
+
+::: {.incremental}
+
+- Sara Acevedo
+- Estudiante Doctorado UC, Magíster UC-Davis
+- Usuaria de R hace años :woman_technologist:
+
+:::
+
+# Presentémonos
+
+```{r}
+library(countdown)
+
+countdown(minutes = 5)
+```
+---
+
+### Qué aprenderemos en este curso :computer:
+
+::: box
+
+La **estadística descriptiva** es la técnica matemática que obtiene, <span class="fragment highlight-blue" fragment-index=1>organiza, presenta y describe</span> un conjunto de datos con el propósito de facilitar el uso, generalmente con el <span class="fragment highlight-red" fragment-index=2>apoyo de tablas, medidas numéricas o gráficas</span>. 
+
+:::
+
+::: {.incremental}
+- {{< fa brands r-project size=1.4xl >}} **Estadística descriptiva** desde cero usando R
+- {{< fa brands r-project size=1.4xl >}} **Graficar** usando ggplot2
+- {{< fa brands r-project size=1.4xl >}} **Extraer** info usando el paquete broom 
+::: 
+
+---
+
+## Clase 01 introductoria
+
+En esta clase:
+
+::: {.incremental}
+-   Entender que es una variable y una función
+-   Tidyverse como herramienta de procesamiento de datos
+-   Identificar los tipos de datos
+-   Importar datos y procesarlos
+-   Hacer nuestra primer análisis descriptivo
+::: 
+
+---
+
+## Código y materiales
+
+Las presentaciones contienen código real (se puede copiar y pegar directamente). El repositorio contendrá el material y contenido de cada clase
+
+```{r}
+1 + 1 # copia y pega en la consola
+```
+::: info-box
+
+El repositorio lo puedes encontrar acá:
+
+<center>
+<i class="fa-solid fa-book"></i> [Repositorio en github](https://github.com/Saryace/estacion_estadistica)
+</center>
+
+:::
+
+---
+
+### Funciones
+
+Una ´function call´ forma una expresión en R, la cual tiene una salida (output)
+
+```{r, eval=FALSE}
+function_name(formal_argument_1 = named_argument_1, 
+              formal_argument_2 = named_argument_2,
+              [etc.])
+```
+
+Como seria en la vida real
+
+```{r, eval=FALSE}
+lavar_ropa(ropa = c("poleras","calcetines"), 
+           detergente = ph_neutro, 
+           nivel_sucio = 5) # poco sucio = 1, muy sucio = 5
+
+output =  ropa_limpia
+```
+
+## Tidyverse: 
+
+* Megapaquete que contiene paquetes para el análisis datos
+* Construidos con los mismos principios
+
+## La filosofía del paquete
+
+* Reusar estructuras de datos
+* Utilizar el operador `pipe %>% ` para combinar funciones
+* Pensado para "humanos"
+
+
+## `pipe %>% ` atajo 
+```{r, fig.align = "center",fig.width=10, fig.height=4, fig.fullwidth=TRUE, echo=F}
+library(ggkeyboard) #libreria: https://github.com/sharlagelfand/ggkeyboard
+ggkeyboard() %>% # teclado por defecto
+  highlight_keys(c("Ctrl Left",
+                   "Shift Left",
+                   "M")) #funcion para destacar teclas
+```
+
+
+## Ejemplo: un pedazo de torta a partir de ingredientes
+
+::: {.incremental}
+- Ingredientes (harina, azúcar, etc.) 🛒
+- Mezclar en un bowl ingredientes 🥣
+- Hornear la mezcla ⏲️
+- Decorar el bizcocho 🥧
+- Cortar 🍰
+:::
+
+## estilo Tidyverse
+
+```{r}
+#| eval: false
+comprar(ingredientes = c((harina,azucar))) %>% 
+mezclar() %>% 
+hornear() %>% 
+decorar() %>% 
+cortar()
+
+```
+
+[Idea de Arthur Welles @ArthurWelle](https://twitter.com/ArthurWelle)
+
+# [{{< fa brands r-project size=1.4xl >}} Abrimos RStudio y creamos un proyecto]{style="color:white;float:right;text-align:right;"} {background-color="#56cc9d"}
+
+## Primer acercamiento: datos de starwars
+
+```{r}
+#| echo: true
+#| eval: true
+#| code-line-numbers: "|1|2|3"
+library(tidyverse) #libreria 
+data(starwars) #función para cargar datos
+head(starwars) # función para imprimir las primeras filas
+```
+
+
+## Variables:
+
+```{r}
+#| echo: true
+#| eval: true
+colnames(starwars) #nombres de variables
+```
+
+Podemos acceder a la variable usando *$*
+
+```{r}
+#| echo: true
+#| eval: true
+
+typeof(starwars$name)
+typeof(starwars$height)
+```
+
+
+## Calculemos el promedio de height
+
+::: {.incremental}
+
+- Usamos la funcion promedio -mean()-
+```{r}
+#| echo: true
+#| eval: true
+
+mean(starwars$height)
+```
+- Usamos la funcion promedio -mean()- y el atributo na.rm = TRUE
+```{r}
+mean(starwars$height, na.rm = TRUE)
+```
+::: 
+
+## Investiguemos que pasó
+
+```{r}
+glimpse(starwars) # ver los datos en forma resumida
+```
+
+```{r}
+summary(starwars) # ver los datos en forma resumida
+```
+
+
+## Investiguemos que pasó
+
+Podemos acceder a documentación:
+
+```{r}
+#| eval: false
+help(mean) # ver documentación
+```
+
+![](img/documentacion_mean.png){fig-align="center"}
+
+## Qué aprendimos de esto?
+
+::: box
+
+Para comenzar con **estadística descriptiva** debemos <span class="fragment highlight-blue" fragment-index=1>conocer los datos</span> y al mismo tiempo <span class="fragment highlight-red" fragment-index=2>las funciones de R</span>. 
+
+:::
+
+
+## Operadores
+Los operadores son símbolos que le indican a R que debe realizar una tarea. Combinando datos + operadores + funciones R hace su trabajo. Los hay:
+
+- Asignación
+- Aritméticos
+- Relacionales
+- Lógicos
+
+## Asignación
+
+|  Operador | Operación  |
+|---|---|
+|   `<-` | Asigna un valor a una variable  |
+|   `=` | Asigna un valor a una variable  |
+
+```{r}
+altura_personajes <- starwars$height
+head(altura_personajes)
+```
+
+## Aritméticos
+
+|  Operador | Operación  |
+|---|---|
+|   `+` | Suma    |
+|   `-` | Resta   |
+|   `*` | Multiplicación    |
+|   `/` | División    |
+|   `^` | Potencia    |
+|  `%%` | División entera |
+
+
+```{r}
+altura_personajes_m <- altura_personajes / 100
+head(altura_personajes_m)
+```
+
+## Relacionales
+
+|  Operador | Operación  |
+|---|---|
+|   `<` | Menor que  |
+|   `<=` | Menor o igual que   |
+|   `>` | Mayor o igual que |
+|   `>=` | División    |
+|   `==` | Exactamente igual que |
+|  `!=` | No es igual que |
+
+
+## Ejemplo uso operadores 
+```{r}
+starwars %>% 
+  filter(height > 160) %>% 
+  count()
+```
+
+```{r}
+starwars %>% 
+  filter(hair_color != "blond") %>% 
+  count()
+```
+
+## Lógicos
+
+|  Operador | Operación  |
+|---|---|
+| x &#x7c; y | x Ó y es verdadero  |
+| x & y | x Y y es verdadero  |
+|   !x | x no es verdadero (negación) |
+|   isTRUE(x) | x es verdadero (afirmación) |
+
+```{r}
+starwars %>% 
+  filter(name == "R2-D2" | name == "C-3PO") %>% 
+  select(name,skin_color,mass) %>% 
+  mutate(es_dorado = ifelse(skin_color=='gold',TRUE,FALSE))
+```
+
+## Más detalle
+::: info-box
+
+Detalle de operadores aritméticos
+
+<center>
+<i class="fa-solid fa-book"></i> [Operadores aritméticos](https://es.r4ds.hadley.nz/transform.html#mutate-funs)
+</center>
+
+::: 
+
+::: info-box
+
+Detalle de operadores lógicos
+
+<center>
+<i class="fa-solid fa-book"></i> [Operadores lógicos](https://es.r4ds.hadley.nz/transform.html#operadores-l%C3%B3gicos)
+</center>
+
+:::
+
+---
+
+## Clases de datos en R (atomic)
+
+* logical (e.g., `TRUE`, `FALSE`)
+* integer (e.g, `2L`, `as.integer(3)`)
+* numeric (real, double) (e.g, `2`, `2.0`, `pi`)
+* complex (e.g, 1 + 0i, 1 + 4i)
+* character (e.g, `"a"`, `"swc"`)
+
+```{r}
+uno_al_diez <- 1:10
+uno_al_diez
+typeof(uno_al_diez)
+```
+
+## Importemos datos y analizemos!
+
+```{r}
+library(googlesheets4)
+datos_mascotas <- read_sheet("https://docs.google.com/spreadsheets/d/1i3J18HyHm4T-yJP1LkMa5qyhjIbJSR4VuMma42I00QA/edit#gid=0")
+colnames(datos_mascotas)
+glimpse(datos_mascotas)
+```
+
+## Procesamiento de datos básico
+
+::: {.incremental}
+- Reordenar las variables en una sola columna por tipo
+- Agrupar por tipo de variable
+- Hacer estadistica descriptiva básica
+::: 
+
+## Reordenar las edades
+```{r}
+library(tidyverse)
+datos_mascotas_edad <-
+datos_mascotas %>% 
+  select(nombre, starts_with("edad")) %>% 
+    pivot_longer(cols = !nombre,
+    names_to = c("dato_edad", "numero_mascota"),
+    names_sep = "_",
+               values_to = "edad") 
+datos_mascotas_edad
+```
+
+## Reordenar el resto de la informacion
+```{r}
+library(tidyverse)
+datos_mascotas_info <-
+datos_mascotas %>% 
+  select(!starts_with("edad") & !starts_with("interes") & !starts_with("mascota")) %>% 
+  pivot_longer(cols = !nombre,
+  names_to = c("info_mascota", "numero_mascota"),
+  names_sep = "_",
+               values_to = "tipo_mascota") 
+datos_mascotas_info
+```
+
+## Se unen los datos
+```{r}
+library(tidyverse)
+datos_mascotas_edad %>% 
+  left_join(datos_mascotas_info, by = c("nombre", "numero_mascota"))
+```
+
+## Comenzamos con estadistística descriptiva básica: por tipo mascota
+```{r}
+library(tidyverse)
+datos_mascotas_edad %>% 
+  left_join(datos_mascotas_info, by = c("nombre", "numero_mascota")) %>% 
+  group_by(tipo_mascota) %>% 
+  drop_na() %>% 
+  summarise(promedio_edad = mean(edad),
+            min_edad = min(edad),
+            max_edad = max(edad))
+```
+
+## Comenzamos con estadistística descriptiva básica: por asistente a la clase
+```{r}
+library(tidyverse)
+datos_mascotas_edad %>% 
+  left_join(datos_mascotas_info, by = c("nombre", "numero_mascota")) %>% 
+  group_by(nombre) %>% # aca asignamos como ordenar
+  drop_na() %>% 
+  summarise(promedio_edad = mean(edad),
+            min_edad = min(edad),
+            max_edad = max(edad))
+```
+# [{{< fa brands r-project size=1.4xl >}} Mucha información nueva por hoy :brain: :fire:]{style="color:white;float:right;text-align:right;"} {background-color="#56cc9d"}
