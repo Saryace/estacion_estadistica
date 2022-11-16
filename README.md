@@ -1,1 +1,1 @@
-# estacion_estadistica
+# Repositorio curso estadística descriptiva desde cero usando R
