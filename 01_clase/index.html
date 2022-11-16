@@ -422,7 +422,7 @@ Sara Acevedo
 <span id="cb1-2"><a href="#cb1-2"></a></span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="fu">countdown</span>(<span class="at">minutes =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="countdown" id="timer_83dcd0d8" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_dc0862b6" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -1175,6 +1175,21 @@ $ starships  &lt;list&gt; &lt;"X-wing", "Imperial shuttle"&gt;, &lt;&gt;, &lt;&g
 <div class="box">
 <p>Para comenzar con <strong>estadística descriptiva</strong> debemos <span class="fragment highlight-blue" data-fragment-index="1">conocer los datos</span> y al mismo tiempo <span class="fragment highlight-red" data-fragment-index="2">las funciones de R</span>.</p>
 </div>
+</section></section>
+<section>
+<section id="ahora-un-break-antes-de-seguir" class="title-slide slide level1 center">
+<h1>Ahora un break antes de seguir</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">library</span>(countdown)</span>
+<span id="cb24-2"><a href="#cb24-2"></a></span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="fu">countdown</span>(<span class="at">minutes =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="countdown" id="timer_b8a1ac3a" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
 </section>
 <section id="operadores" class="slide level2">
 <h2>Operadores</h2>
@@ -1207,8 +1222,8 @@ $ starships  &lt;list&gt; &lt;"X-wing", "Imperial shuttle"&gt;, &lt;&gt;, &lt;&g
 </tbody>
 </table>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>altura_personajes <span class="ot">&lt;-</span> starwars<span class="sc">$</span>height</span>
-<span id="cb24-2"><a href="#cb24-2"></a><span class="fu">head</span>(altura_personajes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>altura_personajes <span class="ot">&lt;-</span> starwars<span class="sc">$</span>height</span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="fu">head</span>(altura_personajes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 172 167  96 202 150 178</code></pre>
 </div>
@@ -1251,8 +1266,8 @@ $ starships  &lt;list&gt; &lt;"X-wing", "Imperial shuttle"&gt;, &lt;&gt;, &lt;&g
 </tbody>
 </table>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>altura_personajes_m <span class="ot">&lt;-</span> altura_personajes <span class="sc">/</span> <span class="dv">100</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a><span class="fu">head</span>(altura_personajes_m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>altura_personajes_m <span class="ot">&lt;-</span> altura_personajes <span class="sc">/</span> <span class="dv">100</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="fu">head</span>(altura_personajes_m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.72 1.67 0.96 2.02 1.50 1.78</code></pre>
 </div>
@@ -1298,9 +1313,9 @@ $ starships  &lt;list&gt; &lt;"X-wing", "Imperial shuttle"&gt;, &lt;&gt;, &lt;&g
 <section id="ejemplo-uso-operadores" class="slide level2">
 <h2>Ejemplo uso operadores</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>starwars <span class="sc">%&gt;%</span> </span>
-<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">filter</span>(height <span class="sc">&gt;</span> <span class="dv">160</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-3"><a href="#cb28-3"></a>  <span class="fu">count</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb29-2"><a href="#cb29-2"></a>  <span class="fu">filter</span>(height <span class="sc">&gt;</span> <span class="dv">160</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-3"><a href="#cb29-3"></a>  <span class="fu">count</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
       n
@@ -1309,9 +1324,9 @@ $ starships  &lt;list&gt; &lt;"X-wing", "Imperial shuttle"&gt;, &lt;&gt;, &lt;&g
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>starwars <span class="sc">%&gt;%</span> </span>
-<span id="cb30-2"><a href="#cb30-2"></a>  <span class="fu">filter</span>(hair_color <span class="sc">!=</span> <span class="st">"blond"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-3"><a href="#cb30-3"></a>  <span class="fu">count</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">filter</span>(hair_color <span class="sc">!=</span> <span class="st">"blond"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href="#cb31-3"></a>  <span class="fu">count</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
       n
@@ -1349,10 +1364,10 @@ $ starships  &lt;list&gt; &lt;"X-wing", "Imperial shuttle"&gt;, &lt;&gt;, &lt;&g
 </tbody>
 </table>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>starwars <span class="sc">%&gt;%</span> </span>
-<span id="cb32-2"><a href="#cb32-2"></a>  <span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"R2-D2"</span> <span class="sc">|</span> name <span class="sc">==</span> <span class="st">"C-3PO"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-3"><a href="#cb32-3"></a>  <span class="fu">select</span>(name,skin_color,mass) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-4"><a href="#cb32-4"></a>  <span class="fu">mutate</span>(<span class="at">es_dorado =</span> <span class="fu">ifelse</span>(skin_color<span class="sc">==</span><span class="st">'gold'</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"R2-D2"</span> <span class="sc">|</span> name <span class="sc">==</span> <span class="st">"C-3PO"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-3"><a href="#cb33-3"></a>  <span class="fu">select</span>(name,skin_color,mass) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-4"><a href="#cb33-4"></a>  <span class="fu">mutate</span>(<span class="at">es_dorado =</span> <span class="fu">ifelse</span>(skin_color<span class="sc">==</span><span class="st">'gold'</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   name  skin_color   mass es_dorado
@@ -1387,12 +1402,12 @@ $ starships  &lt;list&gt; &lt;"X-wing", "Imperial shuttle"&gt;, &lt;&gt;, &lt;&g
 <li>character (e.g, <code>"a"</code>, <code>"swc"</code>)</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>uno_al_diez <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
-<span id="cb34-2"><a href="#cb34-2"></a>uno_al_diez</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>uno_al_diez <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a>uno_al_diez</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">typeof</span>(uno_al_diez)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">typeof</span>(uno_al_diez)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "integer"</code></pre>
 </div>
@@ -1401,14 +1416,14 @@ $ starships  &lt;list&gt; &lt;"X-wing", "Imperial shuttle"&gt;, &lt;&gt;, &lt;&g
 <section id="importemos-datos-y-analizemos" class="slide level2">
 <h2>Importemos datos y analizemos!</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">library</span>(googlesheets4)</span>
-<span id="cb38-2"><a href="#cb38-2"></a>datos_mascotas <span class="ot">&lt;-</span> <span class="fu">read_sheet</span>(<span class="st">"https://docs.google.com/spreadsheets/d/1i3J18HyHm4T-yJP1LkMa5qyhjIbJSR4VuMma42I00QA/edit#gid=0"</span>)</span>
-<span id="cb38-3"><a href="#cb38-3"></a><span class="fu">colnames</span>(datos_mascotas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">library</span>(googlesheets4)</span>
+<span id="cb39-2"><a href="#cb39-2"></a>datos_mascotas <span class="ot">&lt;-</span> <span class="fu">read_sheet</span>(<span class="st">"https://docs.google.com/spreadsheets/d/1i3J18HyHm4T-yJP1LkMa5qyhjIbJSR4VuMma42I00QA/edit#gid=0"</span>)</span>
+<span id="cb39-3"><a href="#cb39-3"></a><span class="fu">colnames</span>(datos_mascotas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "nombre"    "interes_1" "interes_2" "mascota_1" "mascota_2" "tipo_1"   
 [7] "tipo_2"    "edad_1"    "edad_2"   </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">glimpse</span>(datos_mascotas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">glimpse</span>(datos_mascotas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 2
 Columns: 9
@@ -1437,15 +1452,15 @@ $ edad_2    &lt;dbl&gt; 4, NA</code></pre>
 <section id="reordenar-las-edades" class="slide level2">
 <h2>Reordenar las edades</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb42-2"><a href="#cb42-2"></a>datos_mascotas_edad <span class="ot">&lt;-</span></span>
-<span id="cb42-3"><a href="#cb42-3"></a>datos_mascotas <span class="sc">%&gt;%</span> </span>
-<span id="cb42-4"><a href="#cb42-4"></a>  <span class="fu">select</span>(nombre, <span class="fu">starts_with</span>(<span class="st">"edad"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-5"><a href="#cb42-5"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>nombre,</span>
-<span id="cb42-6"><a href="#cb42-6"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"dato_edad"</span>, <span class="st">"numero_mascota"</span>),</span>
-<span id="cb42-7"><a href="#cb42-7"></a>    <span class="at">names_sep =</span> <span class="st">"_"</span>,</span>
-<span id="cb42-8"><a href="#cb42-8"></a>               <span class="at">values_to =</span> <span class="st">"edad"</span>) </span>
-<span id="cb42-9"><a href="#cb42-9"></a>datos_mascotas_edad</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb43-2"><a href="#cb43-2"></a>datos_mascotas_edad <span class="ot">&lt;-</span></span>
+<span id="cb43-3"><a href="#cb43-3"></a>datos_mascotas <span class="sc">%&gt;%</span> </span>
+<span id="cb43-4"><a href="#cb43-4"></a>  <span class="fu">select</span>(nombre, <span class="fu">starts_with</span>(<span class="st">"edad"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-5"><a href="#cb43-5"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>nombre,</span>
+<span id="cb43-6"><a href="#cb43-6"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"dato_edad"</span>, <span class="st">"numero_mascota"</span>),</span>
+<span id="cb43-7"><a href="#cb43-7"></a>    <span class="at">names_sep =</span> <span class="st">"_"</span>,</span>
+<span id="cb43-8"><a href="#cb43-8"></a>               <span class="at">values_to =</span> <span class="st">"edad"</span>) </span>
+<span id="cb43-9"><a href="#cb43-9"></a>datos_mascotas_edad</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 4
   nombre           dato_edad numero_mascota  edad
@@ -1460,15 +1475,15 @@ $ edad_2    &lt;dbl&gt; 4, NA</code></pre>
 <section id="reordenar-el-resto-de-la-informacion" class="slide level2">
 <h2>Reordenar el resto de la informacion</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb44-2"><a href="#cb44-2"></a>datos_mascotas_info <span class="ot">&lt;-</span></span>
-<span id="cb44-3"><a href="#cb44-3"></a>datos_mascotas <span class="sc">%&gt;%</span> </span>
-<span id="cb44-4"><a href="#cb44-4"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">starts_with</span>(<span class="st">"edad"</span>) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">starts_with</span>(<span class="st">"interes"</span>) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">starts_with</span>(<span class="st">"mascota"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-5"><a href="#cb44-5"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>nombre,</span>
-<span id="cb44-6"><a href="#cb44-6"></a>  <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"info_mascota"</span>, <span class="st">"numero_mascota"</span>),</span>
-<span id="cb44-7"><a href="#cb44-7"></a>  <span class="at">names_sep =</span> <span class="st">"_"</span>,</span>
-<span id="cb44-8"><a href="#cb44-8"></a>               <span class="at">values_to =</span> <span class="st">"tipo_mascota"</span>) </span>
-<span id="cb44-9"><a href="#cb44-9"></a>datos_mascotas_info</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb45-2"><a href="#cb45-2"></a>datos_mascotas_info <span class="ot">&lt;-</span></span>
+<span id="cb45-3"><a href="#cb45-3"></a>datos_mascotas <span class="sc">%&gt;%</span> </span>
+<span id="cb45-4"><a href="#cb45-4"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">starts_with</span>(<span class="st">"edad"</span>) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">starts_with</span>(<span class="st">"interes"</span>) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">starts_with</span>(<span class="st">"mascota"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-5"><a href="#cb45-5"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>nombre,</span>
+<span id="cb45-6"><a href="#cb45-6"></a>  <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"info_mascota"</span>, <span class="st">"numero_mascota"</span>),</span>
+<span id="cb45-7"><a href="#cb45-7"></a>  <span class="at">names_sep =</span> <span class="st">"_"</span>,</span>
+<span id="cb45-8"><a href="#cb45-8"></a>               <span class="at">values_to =</span> <span class="st">"tipo_mascota"</span>) </span>
+<span id="cb45-9"><a href="#cb45-9"></a>datos_mascotas_info</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 4
   nombre           info_mascota numero_mascota tipo_mascota
@@ -1483,9 +1498,9 @@ $ edad_2    &lt;dbl&gt; 4, NA</code></pre>
 <section id="se-unen-los-datos" class="slide level2">
 <h2>Se unen los datos</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb46-2"><a href="#cb46-2"></a>datos_mascotas_edad <span class="sc">%&gt;%</span> </span>
-<span id="cb46-3"><a href="#cb46-3"></a>  <span class="fu">left_join</span>(datos_mascotas_info, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"nombre"</span>, <span class="st">"numero_mascota"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb47-2"><a href="#cb47-2"></a>datos_mascotas_edad <span class="sc">%&gt;%</span> </span>
+<span id="cb47-3"><a href="#cb47-3"></a>  <span class="fu">left_join</span>(datos_mascotas_info, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"nombre"</span>, <span class="st">"numero_mascota"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 6
   nombre           dato_edad numero_mascota  edad info_mascota tipo_mascota
@@ -1500,14 +1515,14 @@ $ edad_2    &lt;dbl&gt; 4, NA</code></pre>
 <section id="comenzamos-con-estadistística-descriptiva-básica-por-tipo-mascota" class="slide level2">
 <h2>Comenzamos con estadistística descriptiva básica: por tipo mascota</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb48-2"><a href="#cb48-2"></a>datos_mascotas_edad <span class="sc">%&gt;%</span> </span>
-<span id="cb48-3"><a href="#cb48-3"></a>  <span class="fu">left_join</span>(datos_mascotas_info, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"nombre"</span>, <span class="st">"numero_mascota"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb48-4"><a href="#cb48-4"></a>  <span class="fu">group_by</span>(tipo_mascota) <span class="sc">%&gt;%</span> </span>
-<span id="cb48-5"><a href="#cb48-5"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb48-6"><a href="#cb48-6"></a>  <span class="fu">summarise</span>(<span class="at">promedio_edad =</span> <span class="fu">mean</span>(edad),</span>
-<span id="cb48-7"><a href="#cb48-7"></a>            <span class="at">min_edad =</span> <span class="fu">min</span>(edad),</span>
-<span id="cb48-8"><a href="#cb48-8"></a>            <span class="at">max_edad =</span> <span class="fu">max</span>(edad))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb49-2"><a href="#cb49-2"></a>datos_mascotas_edad <span class="sc">%&gt;%</span> </span>
+<span id="cb49-3"><a href="#cb49-3"></a>  <span class="fu">left_join</span>(datos_mascotas_info, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"nombre"</span>, <span class="st">"numero_mascota"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-4"><a href="#cb49-4"></a>  <span class="fu">group_by</span>(tipo_mascota) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-5"><a href="#cb49-5"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb49-6"><a href="#cb49-6"></a>  <span class="fu">summarise</span>(<span class="at">promedio_edad =</span> <span class="fu">mean</span>(edad),</span>
+<span id="cb49-7"><a href="#cb49-7"></a>            <span class="at">min_edad =</span> <span class="fu">min</span>(edad),</span>
+<span id="cb49-8"><a href="#cb49-8"></a>            <span class="at">max_edad =</span> <span class="fu">max</span>(edad))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   tipo_mascota promedio_edad min_edad max_edad
@@ -1520,14 +1535,14 @@ $ edad_2    &lt;dbl&gt; 4, NA</code></pre>
 <section id="comenzamos-con-estadistística-descriptiva-básica-por-asistente-a-la-clase" class="slide level2">
 <h2>Comenzamos con estadistística descriptiva básica: por asistente a la clase</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb50-2"><a href="#cb50-2"></a>datos_mascotas_edad <span class="sc">%&gt;%</span> </span>
-<span id="cb50-3"><a href="#cb50-3"></a>  <span class="fu">left_join</span>(datos_mascotas_info, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"nombre"</span>, <span class="st">"numero_mascota"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb50-4"><a href="#cb50-4"></a>  <span class="fu">group_by</span>(nombre) <span class="sc">%&gt;%</span> <span class="co"># aca asignamos como ordenar</span></span>
-<span id="cb50-5"><a href="#cb50-5"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb50-6"><a href="#cb50-6"></a>  <span class="fu">summarise</span>(<span class="at">promedio_edad =</span> <span class="fu">mean</span>(edad),</span>
-<span id="cb50-7"><a href="#cb50-7"></a>            <span class="at">min_edad =</span> <span class="fu">min</span>(edad),</span>
-<span id="cb50-8"><a href="#cb50-8"></a>            <span class="at">max_edad =</span> <span class="fu">max</span>(edad))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb51-2"><a href="#cb51-2"></a>datos_mascotas_edad <span class="sc">%&gt;%</span> </span>
+<span id="cb51-3"><a href="#cb51-3"></a>  <span class="fu">left_join</span>(datos_mascotas_info, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"nombre"</span>, <span class="st">"numero_mascota"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb51-4"><a href="#cb51-4"></a>  <span class="fu">group_by</span>(nombre) <span class="sc">%&gt;%</span> <span class="co"># aca asignamos como ordenar</span></span>
+<span id="cb51-5"><a href="#cb51-5"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb51-6"><a href="#cb51-6"></a>  <span class="fu">summarise</span>(<span class="at">promedio_edad =</span> <span class="fu">mean</span>(edad),</span>
+<span id="cb51-7"><a href="#cb51-7"></a>            <span class="at">min_edad =</span> <span class="fu">min</span>(edad),</span>
+<span id="cb51-8"><a href="#cb51-8"></a>            <span class="at">max_edad =</span> <span class="fu">max</span>(edad))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   nombre           promedio_edad min_edad max_edad

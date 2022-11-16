@@ -211,7 +211,6 @@ glimpse(starwars) # ver los datos en forma resumida
 summary(starwars) # ver los datos en forma resumida
 ```
 
-
 ## Investiguemos que pasó
 
 Podemos acceder a documentación:
@@ -231,6 +230,14 @@ Para comenzar con **estadística descriptiva** debemos <span class="fragment hig
 
 :::
 
+# Ahora un break antes de seguir
+
+```{r}
+#| echo: true
+library(countdown)
+
+countdown(minutes = 10)
+```
 
 ## Operadores
 Los operadores son símbolos que le indican a R que debe realizar una tarea. Combinando datos + operadores + funciones R hace su trabajo. Los hay:
