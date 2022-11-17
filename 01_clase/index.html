@@ -422,7 +422,7 @@ Sara Acevedo
 <span id="cb1-2"><a href="#cb1-2"></a></span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="fu">countdown</span>(<span class="at">minutes =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="countdown" id="timer_dc0862b6" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_0621179a" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -1184,7 +1184,7 @@ $ starships  &lt;list&gt; &lt;"X-wing", "Imperial shuttle"&gt;, &lt;&gt;, &lt;&g
 <span id="cb24-2"><a href="#cb24-2"></a></span>
 <span id="cb24-3"><a href="#cb24-3"></a><span class="fu">countdown</span>(<span class="at">minutes =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="countdown" id="timer_b8a1ac3a" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_cc88e163" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -1425,17 +1425,17 @@ $ starships  &lt;list&gt; &lt;"X-wing", "Imperial shuttle"&gt;, &lt;&gt;, &lt;&g
 </div>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">glimpse</span>(datos_mascotas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 2
+<pre><code>Rows: 8
 Columns: 9
-$ nombre    &lt;chr&gt; "Sara Acevedo", "Carolina Giraldo"
-$ interes_1 &lt;chr&gt; "tecnologia", "Dormir"
-$ interes_2 &lt;chr&gt; "juegos de mesa", "Tomar cafe"
-$ mascota_1 &lt;chr&gt; "ojito", "Muñeca"
-$ mascota_2 &lt;chr&gt; "tajito", NA
-$ tipo_1    &lt;chr&gt; "gato", "perro"
-$ tipo_2    &lt;chr&gt; "gato", NA
-$ edad_1    &lt;dbl&gt; 11, 6
-$ edad_2    &lt;dbl&gt; 4, NA</code></pre>
+$ nombre    &lt;chr&gt; "Sara Acevedo", "Carolina Giraldo", "Cristian Llévenes", "Xi…
+$ interes_1 &lt;chr&gt; "tecnologia", "Dormir", "Deportes", "leer", "Música", "Fútbo…
+$ interes_2 &lt;chr&gt; "juegos de mesa", "Tomar cafe", "Literatura", "pilates", "Ci…
+$ mascota_1 &lt;chr&gt; "ojito", "Muñeca", "Rucio", "Milo", "Chiquitita", "Lula", NA…
+$ mascota_2 &lt;chr&gt; "tajito", NA, "Mustafa", "Totoro", NA, "Carlota", NA, NA
+$ tipo_1    &lt;chr&gt; "gato", "perro", "gato", "perro", "gato", "perro", NA, "perr…
+$ tipo_2    &lt;chr&gt; "gato", NA, "gato", "perro", NA, "gato", NA, NA
+$ edad_1    &lt;dbl&gt; 11, 6, 2, 11, 11, 1, NA, 4
+$ edad_2    &lt;dbl&gt; 4, NA, 2, 6, NA, 1, NA, NA</code></pre>
 </div>
 </div>
 </section>
@@ -1462,13 +1462,25 @@ $ edad_2    &lt;dbl&gt; 4, NA</code></pre>
 <span id="cb43-8"><a href="#cb43-8"></a>               <span class="at">values_to =</span> <span class="st">"edad"</span>) </span>
 <span id="cb43-9"><a href="#cb43-9"></a>datos_mascotas_edad</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 4
-  nombre           dato_edad numero_mascota  edad
-  &lt;chr&gt;            &lt;chr&gt;     &lt;chr&gt;          &lt;dbl&gt;
-1 Sara Acevedo     edad      1                 11
-2 Sara Acevedo     edad      2                  4
-3 Carolina Giraldo edad      1                  6
-4 Carolina Giraldo edad      2                 NA</code></pre>
+<pre><code># A tibble: 16 × 4
+   nombre                 dato_edad numero_mascota  edad
+   &lt;chr&gt;                  &lt;chr&gt;     &lt;chr&gt;          &lt;dbl&gt;
+ 1 Sara Acevedo           edad      1                 11
+ 2 Sara Acevedo           edad      2                  4
+ 3 Carolina Giraldo       edad      1                  6
+ 4 Carolina Giraldo       edad      2                 NA
+ 5 Cristian Llévenes      edad      1                  2
+ 6 Cristian Llévenes      edad      2                  2
+ 7 Ximena Silva           edad      1                 11
+ 8 Ximena Silva           edad      2                  6
+ 9 José Castro            edad      1                 11
+10 José Castro            edad      2                 NA
+11 Raúl Uberuaga          edad      1                  1
+12 Raúl Uberuaga          edad      2                  1
+13 Constantino Villarroel edad      1                 NA
+14 Constantino Villarroel edad      2                 NA
+15 Matías Salamanca Vera  edad      1                  4
+16 Matías Salamanca Vera  edad      2                 NA</code></pre>
 </div>
 </div>
 </section>
@@ -1485,13 +1497,25 @@ $ edad_2    &lt;dbl&gt; 4, NA</code></pre>
 <span id="cb45-8"><a href="#cb45-8"></a>               <span class="at">values_to =</span> <span class="st">"tipo_mascota"</span>) </span>
 <span id="cb45-9"><a href="#cb45-9"></a>datos_mascotas_info</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 4
-  nombre           info_mascota numero_mascota tipo_mascota
-  &lt;chr&gt;            &lt;chr&gt;        &lt;chr&gt;          &lt;chr&gt;       
-1 Sara Acevedo     tipo         1              gato        
-2 Sara Acevedo     tipo         2              gato        
-3 Carolina Giraldo tipo         1              perro       
-4 Carolina Giraldo tipo         2              &lt;NA&gt;        </code></pre>
+<pre><code># A tibble: 16 × 4
+   nombre                 info_mascota numero_mascota tipo_mascota
+   &lt;chr&gt;                  &lt;chr&gt;        &lt;chr&gt;          &lt;chr&gt;       
+ 1 Sara Acevedo           tipo         1              gato        
+ 2 Sara Acevedo           tipo         2              gato        
+ 3 Carolina Giraldo       tipo         1              perro       
+ 4 Carolina Giraldo       tipo         2              &lt;NA&gt;        
+ 5 Cristian Llévenes      tipo         1              gato        
+ 6 Cristian Llévenes      tipo         2              gato        
+ 7 Ximena Silva           tipo         1              perro       
+ 8 Ximena Silva           tipo         2              perro       
+ 9 José Castro            tipo         1              gato        
+10 José Castro            tipo         2              &lt;NA&gt;        
+11 Raúl Uberuaga          tipo         1              perro       
+12 Raúl Uberuaga          tipo         2              gato        
+13 Constantino Villarroel tipo         1              &lt;NA&gt;        
+14 Constantino Villarroel tipo         2              &lt;NA&gt;        
+15 Matías Salamanca Vera  tipo         1              perro       
+16 Matías Salamanca Vera  tipo         2              &lt;NA&gt;        </code></pre>
 </div>
 </div>
 </section>
@@ -1502,13 +1526,26 @@ $ edad_2    &lt;dbl&gt; 4, NA</code></pre>
 <span id="cb47-2"><a href="#cb47-2"></a>datos_mascotas_edad <span class="sc">%&gt;%</span> </span>
 <span id="cb47-3"><a href="#cb47-3"></a>  <span class="fu">left_join</span>(datos_mascotas_info, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"nombre"</span>, <span class="st">"numero_mascota"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 6
-  nombre           dato_edad numero_mascota  edad info_mascota tipo_mascota
-  &lt;chr&gt;            &lt;chr&gt;     &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;       
-1 Sara Acevedo     edad      1                 11 tipo         gato        
-2 Sara Acevedo     edad      2                  4 tipo         gato        
-3 Carolina Giraldo edad      1                  6 tipo         perro       
-4 Carolina Giraldo edad      2                 NA tipo         &lt;NA&gt;        </code></pre>
+<pre><code># A tibble: 16 × 6
+   nombre                 dato_edad numero_mascota  edad info_mascota tipo_mas…¹
+   &lt;chr&gt;                  &lt;chr&gt;     &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;     
+ 1 Sara Acevedo           edad      1                 11 tipo         gato      
+ 2 Sara Acevedo           edad      2                  4 tipo         gato      
+ 3 Carolina Giraldo       edad      1                  6 tipo         perro     
+ 4 Carolina Giraldo       edad      2                 NA tipo         &lt;NA&gt;      
+ 5 Cristian Llévenes      edad      1                  2 tipo         gato      
+ 6 Cristian Llévenes      edad      2                  2 tipo         gato      
+ 7 Ximena Silva           edad      1                 11 tipo         perro     
+ 8 Ximena Silva           edad      2                  6 tipo         perro     
+ 9 José Castro            edad      1                 11 tipo         gato      
+10 José Castro            edad      2                 NA tipo         &lt;NA&gt;      
+11 Raúl Uberuaga          edad      1                  1 tipo         perro     
+12 Raúl Uberuaga          edad      2                  1 tipo         gato      
+13 Constantino Villarroel edad      1                 NA tipo         &lt;NA&gt;      
+14 Constantino Villarroel edad      2                 NA tipo         &lt;NA&gt;      
+15 Matías Salamanca Vera  edad      1                  4 tipo         perro     
+16 Matías Salamanca Vera  edad      2                 NA tipo         &lt;NA&gt;      
+# … with abbreviated variable name ¹​tipo_mascota</code></pre>
 </div>
 </div>
 </section>
@@ -1527,8 +1564,8 @@ $ edad_2    &lt;dbl&gt; 4, NA</code></pre>
 <pre><code># A tibble: 2 × 4
   tipo_mascota promedio_edad min_edad max_edad
   &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-1 gato                   7.5        4       11
-2 perro                  6          6        6</code></pre>
+1 gato                  5.17        1       11
+2 perro                 5.6         1       11</code></pre>
 </div>
 </div>
 </section>
@@ -1544,11 +1581,16 @@ $ edad_2    &lt;dbl&gt; 4, NA</code></pre>
 <span id="cb51-7"><a href="#cb51-7"></a>            <span class="at">min_edad =</span> <span class="fu">min</span>(edad),</span>
 <span id="cb51-8"><a href="#cb51-8"></a>            <span class="at">max_edad =</span> <span class="fu">max</span>(edad))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 4
-  nombre           promedio_edad min_edad max_edad
-  &lt;chr&gt;                    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-1 Carolina Giraldo           6          6        6
-2 Sara Acevedo               7.5        4       11</code></pre>
+<pre><code># A tibble: 7 × 4
+  nombre                promedio_edad min_edad max_edad
+  &lt;chr&gt;                         &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1 Carolina Giraldo                6          6        6
+2 Cristian Llévenes               2          2        2
+3 José Castro                    11         11       11
+4 Matías Salamanca Vera           4          4        4
+5 Raúl Uberuaga                   1          1        1
+6 Sara Acevedo                    7.5        4       11
+7 Ximena Silva                    8.5        6       11</code></pre>
 </div>
 </div>
 </section></section>
