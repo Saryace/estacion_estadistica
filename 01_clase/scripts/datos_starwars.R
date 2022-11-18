@@ -1,4 +1,8 @@
 
+# Instalacion de paquetes -------------------------------------------------
+
+# install.packages("tidyverse") solo correr una vez
+
 # librerias ---------------------------------------------------------------
 
 library(tidyverse)
@@ -14,7 +18,7 @@ colnames(starwars) #nombres de variables
 
 # Chequeamos los tipos de datos -------------------------------------------
 
-typeof(starwars$name)
+typeof(starwars$height)
 typeof(starwars$height)
 
 # Calculamos promedios sin na.rm = TRUE -----------------------------------
@@ -36,6 +40,7 @@ summary(starwars) # ver los datos en forma resumida
 ## Ejemplo uso operadores 
 
 starwars %>% 
+  group_by(sex) %>% # agrupacion antes de filtrar
   filter(height > 160) %>% 
   count()
 

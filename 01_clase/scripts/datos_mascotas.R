@@ -51,10 +51,12 @@ datos_mascotas_edad %>%
 datos_mascotas_edad %>% 
   left_join(datos_mascotas_info, by = c("nombre", "numero_mascota")) %>% 
   group_by(tipo_mascota) %>% 
-  drop_na() %>% 
-  summarise(promedio_edad = mean(edad),
+  #drop_na() %>% 
+  summarise(mean(edad),
+            n = n(),
             min_edad = min(edad),
-            max_edad = max(edad))
+            max_edad = max(edad),
+            sd_edad = sd(edad))
 
 # Ahora por asistente -----------------------------------------------------
 
