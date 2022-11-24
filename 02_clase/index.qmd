@@ -1,0 +1,385 @@
+---
+title: "Clase 02"
+subtitle: "Estadística Descriptiva desde 0 en R"
+author: "Sara Acevedo"
+title-slide-attributes:
+    data-background-image: "img/mint-tea.jpeg"
+    data-background-size: contain
+    data-background-opacity: "0.5"
+format:
+  revealjs: 
+    slide-number: true
+    theme: [default, mi_tema.scss]
+    auto-stretch: false
+from: markdown+emoji
+execute:
+  echo: true
+---
+
+# [Bienvenidos a la clase 02!]{style="color: white;float:center;text-align:left;"} {background-color="#56cc9d"} 
+
+## Qué vimos la clase anterior?
+
+::: {.incremental}
+
+- Conceptos a usar en R y estadística descriptiva
+- Idea general del flujo de trabajo
+- Que es una función y una variable
+- Algunos atajos en RStudio
+
+:::
+
+
+## Qué aprenderemos en esta clase :computer:
+
+::: {.incremental}
+
+- Revisaremos en detalle funciones
+- Importación de datos desde Excel y SPSS
+- Ordenar los datos para diferentes objetivos
+- Seguiremos avanzando en estadística descriptiva
+
+:::
+
+## Repaso de atajos
+
+|  Acción | Atajo  |
+|---|---|
+| Insertar %>%  | Ctrl+Shift+M o Cmd+Shift+M  |
+| Insertar sección código | Ctrl+Shift+R o Cmd+Shift+R  |
+| Insertar comentario | comenzar con "#" o Ctrl+Shift+C o Cmd+Shift+C |
+|   Dividir en líneas | Ctrl+Shift+A o Cmd+Shift+A |
+
+Más atajos [acá](https://support.posit.co/hc/en-us/articles/200711853-Keyboard-Shortcuts-in-the-RStudio-IDE)
+
+## Código y materiales
+
+::: info-box
+
+El repositorio lo puedes encontrar acá:
+
+<center>
+<i class="fa-solid fa-book"></i> [Repositorio en github](https://github.com/Saryace/estacion_estadistica)
+</center>
+
+:::
+
+---
+
+### Funciones útiles para procesar datos `dplyr::`
+
+* `mutate()` añade nuevas variables que son funciones de variables existentes
+* `select()` escoge variables basadas en sus nombres
+* `filter()` selecciona los casos en función de sus valores
+* `summarise()` reduce los valores múltiples a un solo resumen
+* `arrange()` cambia el orden de las filas
+
+## Ejercicio conceptual
+
+::: {layout-ncol=3}
+
+![](img/filter.png)
+
+![](img/group_by.png)
+
+![](img/summarise.png)
+
+:::
+
+## Ejercicio conceptual
+
+::: {layout-ncol=3}
+
+![filter](img/filter.png)
+
+![group_by](img/group_by.png)
+
+![summarise](img/summarise.png)
+
+:::
+
+## Funciones para ordenar datos `tidyr::` 
+
+* Objetivo: datos tidy rectangulares 
+* Cada variable forma su propia columna 
+* Cada observación forma una fila
+* Y cada celda es un único valor
+
+![tidy data](img/tidy_data.png)
+Más info en R4DS [tidy data](https://r4ds.had.co.nz/tidy-data.html)
+
+
+## Formatos long y wide
+
+* El formato *wide* es el formato típico tidy rectangular
+* El formato *long* se usa para agrupar 
+* El formato *long* se usa para visualización de datos con `ggplot2`
+
+## Es común intercambiar entre formatos
+
+:::: {.columns}
+
+::: {.column width="40%"}
+![](img/pivot_wider_longer.gif)
+:::
+
+::: {.column width="60%"}
+* `pivot_longer()` transforma a formato long
+* `pivot_wider()` transforma a formato wide
+* [Acá](https://github.com/gadenbuie/tidyexplain) más material dinámico por Garrick Aden-Buie
+:::
+
+::::
+
+
+## Uniones de datos: operaciones join
+
+inner_join() fusiona variables de dos conjuntos de datos, pero conserva sólo las filas con un ID común
+
+![](img/inner_.gif)
+
+## Uniones de datos: operaciones join
+
+left_join() fusiona variables de dos conjuntos de datos, pero conserva sólo los ID común de la izquierda 
+
+![](img/left_.gif)
+
+## Uniones de datos: operaciones join
+
+right_join() fusiona variables de dos conjuntos de datos, pero conserva sólo los ID común de la derecha
+
+![](img/right_.gif)
+
+## Uniones de datos: operaciones join
+
+full_join() retiene todas las filas de los dos conjuntos de datos de entrada e inserta `NA` cuando falta un ID 
+
+![](img/full_.gif)
+---
+
+## Buenas práctica: ser consistente cuando se nombran variables
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+![](img/ELuERYrU0AAI_7b.jpeg)
+
+:::
+
+::: {.column width="50%"}
+
+* MIS_MASCOTAS
+* mis_mascotas
+* misMascotas
+* mis-mascotas
+* Fuente: [@allison_horst en Twitter](https://twitter.com/allison_horst/status/1205702878544875521?s=20&t=uds-qMmV2G9axfiOq6xlUw)
+
+:::
+
+::::
+
+---
+
+## Un ejercicio
+
+:::: {.columns}
+
+::: {.column width="50%"}
+`mis_mascotas`
+```{r}
+#| echo: false
+library(tidyverse)
+mis_mascotas <- 
+data.frame(
+"nombre" = c("cuchito",
+             "cachupin",
+             "bigotito"),
+"color" = c("negro", 
+            "blanco",
+             "atigrado")
+  )
+
+mis_mascotas
+```
+:::
+
+::: {.column width="50%"}
+`examenes`
+```{r}
+#| echo: false
+examenes <- 
+  data.frame(
+    "paciente" = c("cuchito",
+                   "cachupin",
+                   "pedrito",
+                   "rambo",
+                   "bigotito"),
+    "positivo_pulgas" = c(TRUE,
+                          FALSE,
+                          TRUE,
+                          FALSE,
+                          TRUE)
+  )
+
+examenes
+```
+:::
+
+::::
+
+## Un ejercicio
+
+`left_join`
+```{r}
+mis_mascotas %>%
+  left_join(examenes,
+            by=c("nombre"="paciente"))
+```
+
+`right_join`
+```{r}
+examenes %>%
+  right_join(mis_mascotas,
+             by=c("paciente"="nombre"))
+```
+
+## Paquetes para importar datos
+
+* `readr`: csv
+* `readxl`: Excel
+* `googlesheets4`: Googledrive
+* `haven`: SPSS, STATA y SAS
+
+## Buena práctica: automatización de tareas `purrr::`
+
+:::: {.columns}
+
+::: {.column width="40%"}
+
+* Es posible automatizar la importación de datos
+* Caso mas común: unión de filas de diferentes fuentes
+* Hoy usaremos [está guía](https://www.gerkelab.com/blog/2018/09/import-directory-csv-purrr-readr/)
+
+:::
+
+::: {.column width="60%"}
+
+![](img/map_dfr.png)
+
+:::
+
+::::
+
+## Cheatsheets
+
+Fuente de información sobre paquetes de forma resumida
+
+* [`readr`,`readxl`, `googlesheets4`](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-import.pdf)
+* [`haven`](https://haven.tidyverse.org/)
+
+## Funciones para estadística descriptiva
+
+* Medidas de tendencia central
+  * Describen el centro de los datos y suelen estar representadas por la media, la mediana y la moda.
+* Medidas de dispersión
+  * El grado en que una distribución se estira o aprieta se mide por la dispersión o variabilidad. Las más populares son la desviación estándar, la varianza y el rango intercuartil.
+  
+## Funciones para estadística descriptiva
+
+:::: {.columns}
+
+::: {.column width="60%"}
+
+```{r}
+mascotas <- 
+data.frame(
+  "edad" = c(3,5,2,4,8,5,11,3,4,12,8,5,10,3),
+  "sano" = c(T,T,T,T,F,T,F,T,T,F,T,T,F,T)
+)
+```
+```{r}
+mean(mascotas$edad)
+median(mascotas$edad)
+IQR(mascotas$edad)
+sd(mascotas$edad)
+var(mascotas$edad)
+```
+:::
+
+::: {.column width="40%"}
+
+* Para la moda necesitamos análisis de datos
+* Para skewness y otras descripciones necesitamos paquetes estadísticos
+
+:::
+
+::::
+
+## Funciones para estadística descriptiva
+
+```{r}
+mascotas %>% 
+  summarise_at(vars(edad),
+               list(mean_edad = mean, median_edad = median,
+                    IQR_edad = IQR, sd_edad = sd,
+                    var_edad = var))
+```
+
+```{r}
+mascotas %>% 
+  group_by(sano) %>% 
+  summarise_at(vars(edad),
+               list(mean_edad = mean, median_edad = median,
+                    IQR_edad = IQR, sd_edad = sd,
+                    var_edad = var))
+```
+
+## Funciones para estadística descriptiva: gráficos
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{r}
+hist(mascotas$edad)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+mascotas %>% ggplot(aes(x = edad)) +
+  geom_histogram(
+    fill = "green", color = alpha("darkgreen", 0.5),
+    breaks = pretty(range(mascotas$edad),
+      n = nclass.Sturges(mascotas$edad),
+      min.n = 1))
+```
+
+:::
+
+::::
+
+# Ahora un break antes de seguir
+
+```{r}
+#| echo: true
+library(countdown)
+
+countdown(minutes = 10)
+```
+
+# [{{< fa brands r-project size=1.4xl >}} Ahora abrimos RStudio]{style="color:white;float:right;text-align:right;"} {background-color="#56cc9d"}
+
+## Qué aprendimos en esta clase :computer:
+
+::: {.incremental}
+
+- Revisamos en detalle funciones
+- Importamos datos desde Excel y SPSS
+- Ordenamos los datos en formato long y wirde
+- Revisamos funciones de estadística descriptiva
+
+:::
+
+
+# [{{< fa brands r-project size=1.4xl >}} Mucha información nueva por hoy :brain: :fire:]{style="color:white;float:right;text-align:right;"} {background-color="#56cc9d"}
