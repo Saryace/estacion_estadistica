@@ -1,0 +1,380 @@
+---
+title: "Clase 03"
+subtitle: "Estadística Descriptiva desde 0 en R"
+author: "Sara Acevedo"
+title-slide-attributes:
+    data-background-image: "img/mint-tea.jpeg"
+    data-background-size: contain
+    data-background-opacity: "0.5"
+format:
+  revealjs: 
+    slide-number: true
+    theme: [default, mi_tema.scss]
+    auto-stretch: false
+from: markdown+emoji
+execute:
+  echo: true
+---
+
+# [Bienvenidos a la clase 03!]{style="color: white;float:center;text-align:left;"} {background-color="#56cc9d"} 
+
+## Qué vimos la clase anterior?
+
+::: {.incremental}
+
+- Conceptos a usar en R y estadística descriptiva
+- Idea general del flujo de trabajo
+- Revisamos en detalle funciones
+- Importación de datos 
+- Ordenar los datos para diferentes objetivos
+
+:::
+
+## Qué aprenderemos en esta clase :computer:
+
+::: {.incremental}
+
+- Aclararemos como trabajar en proyectos y directorios
+- Como encontrar que función necesito
+- Pruebas de hipótesis
+- Comparar grupos
+- Formato de datos (long y wide)
+- Inicio de ggplot2
+
+:::
+
+## Código y materiales
+
+::: info-box
+
+El repositorio lo puedes encontrar acá:
+
+<center>
+<i class="fa-solid fa-book"></i> [Repositorio en github](https://github.com/Saryace/estacion_estadistica)
+</center>
+
+:::
+
+## Directorio
+
+El directorio o carpeta de trabajo es el lugar en el que se encuentran los archivos con los que estamos trabajando en R. 
+
+Este es el lugar donde R importará y exportará datos
+
+Más detalle [acá](https://bookdown.org/jboscomendoza/r-principiantes4/directorio-de-trabajo.html)
+
+
+##
+
+:::: {.columns}
+
+::: {.column width="40%"}
+
+![](img/directorio.png)
+:::
+
+::: {.column width="60%"}
+- Esta carpeta que contiene un .Rproj puede estar ubicada en el escritorio, documentos, etc.
+- Al abrir el archivo .Rproj los directorios del resto de las carpetas serán relativos
+:::
+
+::::
+
+## Veamos como ejemplo el archivo datos_a.xlsx
+
+:::: {.columns}
+
+::: {.column width="25%"}
+
+![](img/directorio.png)
+:::
+
+::: {.column width="75%"}
+
+- Directorio *absoluto*
+
+C:/Users/Sara/Documents/stats/data/datos_a.xlsx
+
+- Directorio *relativo*
+
+data/datos_a.xlsx
+
+:::
+
+::::
+
+##
+
+:::: {.columns}
+
+::: {.column width="60%"}
+
+![](img/here.png)
+:::
+
+::: {.column width="40%"}
+- Al usar projectos nuestros scripts y análisis son reproducibles
+- Sin projectos tendríamos que usar funciones y/o directorios absolutos
+- Arte por [Allison Horst](https://allisonhorst.com/r-packages-functions) 
+:::
+
+::::
+
+## Hemos visto muchas funciones muy rápido: como buscar info
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+1. R es el peor lenguaje para googlear
+2. Vocabulario adecuado de la terminología de R puede ayudar
+
+::: 
+
+::: {.column width="50%"}
+
+![](img/meme.jpeg)
+::: 
+
+::::
+
+## Hemos visto muchas funciones muy rápido: como buscar info
+Los errores clásicos se pueden buscar en google como [R] + mensaje
+
+```r
+cafes <- data__frame("nombre" = c("cortado","mocha"),
+                           "precio" = c(1500,1750)
+cafe$nombre
+```
+
+- `Error: unexpected symbol in...`
+- `Error: object 'cafe' not found`
+- `could not find function "data__frame"`
+
+---
+
+## Hemos visto muchas funciones muy rápido: como buscar info
+
+Siempre es bueno revisar la documentación de las funciones que queremos usar
+
+- Escribir en la consola `?funcion`, `??funcion` o `help(funcion)` para ir a la ayuda
+- Buscar paquete + cheatsheet en google
+- Buscar paquete + vignette en google
+
+
+## Hemos visto muchas funciones muy rápido: como buscar info
+- Sé lo que mi código necesita hacer pero no se como escribirlo
+- Usar lenguage técnico sobre clases y estructuras de datos ayuda
+
+## ejemplo: tengo que extraer los minutos de `edades_mascotas` 
+
+```{r}
+library(tidyverse)
+edades_mascotas <- c("30 meses", "120 meses", "20 meses")
+edades_mascotas
+```
+reviso el tipo de datos:
+```{r}
+class(edades_mascotas)
+```
+
+No puedor hacer operaciones matemáticas!
+```{r}
+mean(edades_mascotas) 
+```
+
+## ejemplo: tengo que extraer los minutos de `edades_mascotas` 
+
+si busco en google: `extract number from character tidyverse` aparece la funcion `parse_number`
+
+```{r}
+edades_mascotas_numerico <- readr::parse_number(edades_mascotas)
+edades_mascotas_numerico
+```
+
+```{r}
+mean(edades_mascotas_numerico) 
+```
+
+Para mas tips [Teach me how to Google](https://ucsb-meds.github.io/teach-me-how-to-google/#1)
+
+## Acá les dejo material en español
+
+* Compilación e información sobre [estadistica + R en español](https://www.maximaformacion.es/blog-dat/estadistica-r-libros-y-hojas-de-referencia-en-espanol/)
+* [Cheatsheets traducidas](https://posit.co/resources/cheatsheets/?type=translations/#translation-12)
+
+## Pruebas de hipótesis (comparaciones de grupos)
+
+* Pruebas t-student
+* Se basan en comprobación de hipótesis y la comprobación estadística real de las mismas. 
+* Comienzan con las hipótesis nula = suposición  
+* A partir de la teoría, se calcula la probabilidad de que la muestra confirme o no la hipótesis
+* Las hipótesis nulas pueden confirmarse o rechazarse
+
+## Comparar grupos: uso de ambos formatos (long y wide)
+
+:::: {.columns}
+
+::: {.column width="45%"}
+* Con el formato long podemos graficar y hacer operaciones por grupos
+* Con el formato wide comparamos columnas
+
+:::
+
+::: {.column width="55%"}
+
+![](img/pivot_wider_longer.gif)
+
+:::
+
+::::
+
+## Comparar grupos: one-way t-test
+
+* Prueba t de una muestra: nos permite probar un conjunto de datos (más concretamente, su valor medio) frente a un valor especificado.
+* La prueba  proporciona un valor **p**: si el valor p es inferior a 0.05, la muestra difiere significativamente del valor de referencia.
+* Importante: Los datos  tienen que estar distribuidos normalmente (test de normalidad: shapiro.test)
+
+## Comparar grupos: one-way t-test
+
+Ejemplo ficticio: los paquetes de Oreos pesan 154g. SERNAC fue a diferentes supermercados y pesó 100 paquetes. 
+Queremos saber si el peso medio de los paquetes difiere de 154g
+
+```{r}
+library(tidyverse)
+oreos <- read_csv("data/data_oreos.csv") # leemos el csv y creamos objeto
+glimpse(oreos) #miramos los datos 
+```
+
+## Comparar grupos: one-way t-test
+
+test de normalidad: shapiro.test
+```{r}
+shapiro.test(oreos$peso_empaque) #test normalidad
+```
+el valor p es mayor que 0.05 => distribución de los datos NO es significativamente diferente de la distribución normal. En otras palabras, podemos asumir la normalidad.
+
+```{r}
+shapiro.test(oreos$peso_empaque)$p.value # podemos acceder al valor
+```
+
+## Comparar grupos: one-way t-test
+
+```{r}
+t.test(oreos$peso_empaque, mu = 154)
+```
+
+valor p es superior a 0.05, la muestra NO difiere significativamente del valor de referencia.
+
+## Comparar grupos: two-way t-test
+
+* Las pruebas two-way pueden ser dos grupos independientes (unpair) o grupos dependientes (paired)
+  * Para paired: se tienen dos valores (es decir, un par de valores) para las mismas muestras (tratamientos,      antes y después, etc. )
+  * Para unpair: las varianzas de los dos grupos son iguales. Esto puede comprobarse mediante pruebas-F.
+* Ambos casos dependen de la normalidad de la muestra (test de normalidad: shapiro.test)
+
+## Comparar grupos: paired two-way t-test
+
+Se realizan dos pruebas (a y b) a 200 estudiantes el mismo día, en diferentes colegios
+
+```{r}
+notas_estudiantes <- read_csv("data/notas_estudiantes.csv")
+glimpse(notas_estudiantes)
+```
+
+## Comparar grupos: paired two-way t-test
+
+Lo primero es revisar si los resultados son distribuidos normalmente: formato wide
+
+```{r}
+head(notas_estudiantes, 4) 
+```
+
+```{r}
+shapiro.test(notas_estudiantes$prueba_a)$p.value
+shapiro.test(notas_estudiantes$prueba_b)$p.value
+```
+
+## Comparar grupos: paired two-way t-test
+
+Ahora podemos aplicar el t-test pareado
+
+```{r}
+t.test(notas_estudiantes$prueba_a,notas_estudiantes$prueba_b,
+       paired = TRUE)
+```
+
+## Comparar grupos: paired two-way t-test
+
+Lo primero es revisar si los resultados son distribuidos normalmente: formato long
+
+```{r}
+notas_estudiantes %>% 
+  pivot_longer(cols = c(prueba_a, prueba_b),
+               names_to = "prueba",
+               values_to = "nota") %>% 
+  head(6)
+```
+
+## Comparar grupos: paired two-way t-test
+
+Lo primero es revisar si los resultados son distribuidos normalmente: formato long
+
+```{r}
+notas_estudiantes %>% 
+  pivot_longer(cols = c(prueba_a, prueba_b),
+               names_to = "prueba",
+               values_to = "nota") %>% 
+  group_by(prueba) %>% 
+  summarise(p_value_normalidad = shapiro.test(nota)$p.value)
+```
+
+## Comparar grupos: paired two-way t-test
+
+Ahora operamos en formato wide para el t-test
+
+```{r}
+notas_estudiantes %>% 
+  summarise(p_value_t.test = t.test(prueba_a, prueba_b,
+                                    paired = TRUE)$p.value)
+```
+
+## Comparar grupos: paired two-way t-test
+
+Con el formato long podemos graficar
+
+```{r}
+#| output-location: slide 
+notas_estudiantes %>% 
+  pivot_longer(cols = c(prueba_a, prueba_b),
+               names_to = "prueba",
+               values_to = "nota") %>% 
+  ggplot(aes(x = prueba, y = nota)) +
+  geom_boxplot()
+
+```
+
+## Ahora nos damos un break
+```{r}
+#| echo: true
+library(countdown)
+
+countdown(minutes = 10)
+```
+
+# [{{< fa brands r-project size=1.4xl >}} Ahora abrimos RStudio]{style="color:white;float:right;text-align:right;"} {background-color="#56cc9d"}
+
+## Qué aprendimos en esta clase :computer:
+
+::: {.incremental}
+
+- Aclaramos como trabajar en proyectos y directorios
+- Como encontrar que función necesito
+- Pruebas de hipótesis
+- Comparar grupos 
+- Formato de datos (long y wide)
+- Inicio de ggplot2
+
+:::
+
+# [{{< fa brands r-project size=1.4xl >}} Mucha información nueva por hoy :brain: :fire:]{style="color:white;float:right;text-align:right;"} {background-color="#56cc9d"}
