@@ -61,6 +61,8 @@ shapiro.test(info_mascotas$edad)$method
 
 shapiro.test(info_mascotas$edad)$data.name
 
+estadistica_mascotas <- shapiro.test(info_mascotas$edad)
+
 # que pasa si el argumento no es solo 1 columna? --------------------------
 
 # shapiro.test(info_mascotas) 
@@ -100,6 +102,10 @@ t.test(oreos$peso_empaque) # alternative hypothesis: true mean is not equal to 0
 notas_estudiantes %>% 
   head(6) # vemos en consola las primeras 6 filas para ver estructura datos
 
+notas_estudiantes %>% 
+  tail(6) # vemos en consola las ultimas 6 filas para ver estructura datos
+
+
 # Como shapiro.test() requiere UNA columna, lo puedo hacer por separado
 
 shapiro.test(notas_estudiantes$prueba_a)
@@ -126,6 +132,13 @@ notas_estudiantes %>%
     values_to = "notas"
   )
 
+notas_estudiantes %>% 
+  pivot_longer(
+    cols = c(-colegio,-id),
+    names_to = "prueba",
+    values_to = "notas"
+  )
+
 # Hacemos shapiro agrupando -----------------------------------------------
 
 notas_estudiantes %>% 
@@ -134,7 +147,7 @@ notas_estudiantes %>%
     names_to = "prueba",
     values_to = "notas"
   ) %>% 
-  group_by(prueba) %>% 
+  group_by(prueba, colegio) %>% # group by puede ser con varias variables
   summarise(p_value_normalidad = shapiro.test(notas)$p.value)
 
 
@@ -177,9 +190,8 @@ notas_estudiantes %>%
     values_to = "notas"
   ) %>% 
   ggplot(aes(x = prueba, # eje x que tiene dos categorias
-             y = notas)) + # eje y
+             y = notas)) + # eje y numerico
   geom_boxplot() # tipo de plot
-
 
 # Podemos graficar por grupos ---------------------------------------------
 
@@ -197,9 +209,15 @@ notas_estudiantes %>%
 # Formato wide no nos deja plotear ----------------------------------------
 
 notas_estudiantes %>% 
-  ggplot(aes(x = id, # eje x que tiene dos categorias
+  ggplot(aes(x = id, # eje x que tiene categorias
              y = prueba_a)) + # eje y
   geom_boxplot()
+
+notas_estudiantes %>% 
+  ggplot(aes(x = prueba_a, # eje x que tiene dos categorias
+             y = prueba_b)) + # eje y
+  geom_point() +
+  geom_smooth()
 
 # ggplot nos deja cambiar colores y formas --------------------------------
 
@@ -217,10 +235,11 @@ notas_estudiantes %>%
   labs(x = "Tipo de prueba efectuada (a ó b)", # texto eje x
        y = "Nota (en escala 1 al 7)", # texto eje y
        title = "Comparación pruebas (a ó b) en Colegio Sol y Luna", # texto titulo
-       subtitle = "Número de estudiantes = 100") + # texto subtitulo
+       subtitle = "Número de estudiantes por colegio = 100") + # texto subtitulo
   scale_x_discrete(labels = c("prueba a",'prueba b')) + # texto categorias de x
   theme_bw() + # estilo de plot
-  theme(legend.position = "none") # remover legenda
+  theme(legend.position = "none",
+        strip.text.x = element_text(size = 15)) # remover legenda
 
 
 
