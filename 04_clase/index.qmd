@@ -1,0 +1,309 @@
+---
+title: "Clase 04"
+subtitle: "Estadística Descriptiva desde 0 en R"
+author: "Sara Acevedo"
+title-slide-attributes:
+    data-background-image: "img/mint-tea.jpeg"
+    data-background-size: contain
+    data-background-opacity: "0.5"
+format:
+  revealjs: 
+    slide-number: true
+    theme: [default, mi_tema.scss]
+    auto-stretch: false
+from: markdown+emoji
+execute:
+  echo: true
+---
+
+# [Bienvenidos a la clase 04!]{style="color: white;float:center;text-align:left;"} {background-color="#56cc9d"} 
+
+## Qué vimos la clase anterior?
+
+::: {.incremental}
+
+- Aclaramos como trabajar en proyectos y directorios
+- Como encontrar que función necesito
+- Pruebas de hipótesis (t.test y normalidad)
+- Comparar grupos 
+- Formato de datos (long y wide)
+- Inicio de ggplot2
+
+:::
+
+## Qué aprenderemos en esta clase :computer:
+
+::: {.incremental}
+
+- Regresion lineal
+- Automatizacion de regresión
+- Continuación de ggplot
+- Uso del paquete broom
+
+:::
+
+## Código y materiales
+
+::: info-box
+
+El repositorio lo puedes encontrar acá:
+
+<center>
+<i class="fa-solid fa-book"></i> [Repositorio en github](https://github.com/Saryace/estacion_estadistica)
+</center>
+
+:::
+
+## Regresión lineal (simple)
+
+La regresión lineal simple se utiliza para predecir cuantitativamente un resultado a partir de una única variable de predicción `x`. El objetivo es construir un modelo matemático (o fórmula) que defina `y` como una función de la variable `x`. 
+
+
+##
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+![](img/linear-regression.png)
+:::
+
+::: {.column width="50%"}
+
+La fórmula matemática de la regresión lineal es `y = b0 + b1*x + e`:
+
+- `b0` es el intercepto (valor predicho x = 0)
+- `b1` es la pendiente de la regresión.
+- `e` es el término de error 
+- Figura de [STDHA](http://www.sthda.com/english/articles/40-regression-analysis/167-simple-linear-regression-in-r/)
+
+:::
+
+::::
+
+## 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+![](img/linear-regression.png)
+:::
+
+::: {.column width="50%"}
+
+Algunos de los puntos están por encima y otros por debajo de la curva. Para usar regresion lineal asumiremos tres cosas
+
+* Linealidad (entre x e y)
+* Homoscedasticidad (distancia de la linea constante)
+* Normalidad de los residuos
+
+:::
+
+::::
+
+## 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+![](img/linear-regression.png)
+:::
+
+::: {.column width="50%"}
+
+La variación media de los puntos en torno a la línea de regresión ajustada se denomina error estándar residual `(RSE)`. 
+
+Cuanto menor sea el `RSE`, mejor será.
+
+:::
+
+::::
+
+## Evaluemos homoscedasticidad, linealidad y residuos
+
+```{r}
+#| echo: false
+library(tidyverse)
+tidy_anscombe <- anscombe %>%
+ pivot_longer(cols = everything(),
+              names_to = c(".value", "set"),
+              names_pattern = "(.)(.)") 
+
+ggplot(tidy_anscombe,
+       aes(x = x,
+           y = y)) +
+  geom_point() + 
+  facet_wrap(~set) +
+  geom_smooth(method = "lm", se = FALSE) +
+  ggtitle("Cuarteto de Anscombe")
+```
+
+## La funcion de R para regresión lineal es  `lm()` 
+
+
+```{r}
+data("trees")
+```
+```{r}
+glimpse(trees)
+```
+* Girth : circunferencia
+* Height: altura
+* Volume: volumen
+
+## 
+
+Nos preguntamos si podemos predecir la altura a partir de la circunferencia, la circunferencia es la variable independiente `x` y la altura es la variable dependiente `y`. 
+
+```{r}
+arboles <- 
+trees %>%
+  rename(circunferencia = Girth,
+         altura = Height, 
+         volumen =  Volume)
+arboles
+```
+
+
+## Un buen glimpse para regresión es ggplot + geom_point
+
+```{r}
+arboles %>% 
+  ggplot(aes(x = circunferencia,
+                 y = altura)) +
+  geom_point()
+```
+
+## Sumemos `geom_smooth()`
+
+```{r}
+arboles %>% 
+  ggplot(aes(x = circunferencia,
+                 y = altura)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+## Vamos a crear el modelo con la función `lm()`
+
+lm(dependiente_var ~ independendiente_var, data = dataset)
+
+```{r}
+
+modelo_arboles <- lm(altura ~ circunferencia, data = arboles)
+
+modelo_arboles
+
+```
+Por cada pulgada que aumente la circunferencia,  su altura aumentará 1.054 pulgadas.
+
+## Revisemos el modelo
+```{r}
+
+library(broom)
+
+tidy(modelo_arboles)
+
+glance(modelo_arboles)
+
+```
+
+## Usamos funciones de rbase para evaluar residuos
+
+```{r}
+plot(modelo_arboles)
+```
+
+## Usaremos el paquete broom para extraer info de los modelos
+
+```{r}
+
+summary(modelo_arboles)$residuals
+
+```
+
+## Como automatizar lm() y hacer varios modelos
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+- Vector: `map()` aplicará la función cada elemento del vector
+
+- Lista:  `map()` aplicará la función a cada elemento de la lista
+
+- dataframe: `map()` aplicará la función a cada columna del dataframe
+
+:::
+
+::: {.column width="50%"}
+
+función base de `purrr`: `map()`
+
+![](img/map.png)
+  
+:::
+
+::::
+
+## Veamos `map()` + vector
+```{r}
+uno_al_diez <- 1:10
+por_diez <- function(x) x*10
+purrr::map(uno_al_diez, por_diez)
+```
+
+Material extra: [Introducción a la programación funcional con purrr](https://albertoalmuinha.com/es/posts/2021-03-11-purrr/purrr-es/)
+
+## Veamos `map_dbl()` + vector
+```{r}
+purrr::map_dbl(uno_al_diez, por_diez)
+```
+
+## Veamos `map()` + lista
+
+```{r}
+
+uno_al_diez_lista <- list("numeros" = 1:10)
+uno_al_diez_lista 
+
+por_diez <- function(x) x*10
+purrr::map(uno_al_diez_lista, por_diez)
+```
+
+
+## función base de `purrr`: `map2()`
+
+`map2()`toma como input una función y la aplica a cada par de elementos (dos vectores o  dos listas)
+
+```{r}
+dataset_a <- c(3, 2 ,1)
+dataset_b <- c(1, 2, 3)
+sumar_filas <- function(x, y) {x+y}
+purrr::map2_dbl(dataset_a, dataset_b, sumar_filas)
+```
+
+## Ahora nos damos un break
+```{r}
+#| echo: true
+library(countdown)
+
+countdown(minutes = 10)
+```
+
+# [{{< fa brands r-project size=1.4xl >}} Ahora abrimos RStudio]{style="color:white;float:right;text-align:right;"} {background-color="#56cc9d"}
+
+## Qué aprendimos en esta clase :computer:
+
+::: {.incremental}
+
+- Regresion lineal
+- Automatizacion de regresión
+- Continuación de ggplot
+- Uso del paquete broom
+
+:::
+
+# [{{< fa brands r-project size=1.4xl >}} Mucha información nueva por hoy :brain: :fire:]{style="color:white;float:right;text-align:right;"} {background-color="#56cc9d"}
