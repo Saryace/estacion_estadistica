@@ -6,3 +6,7 @@
   - [Presentación](https://saryace.github.io/estacion_estadistica/02_clase/)
 - Clase 3:
   - [Presentación](https://saryace.github.io/estacion_estadistica/03_clase/)
+- Clase 4:
+  - [Presentación](https://saryace.github.io/estacion_estadistica/04_clase/)
+- Clase 5:
+  - [Presentación](https://saryace.github.io/estacion_estadistica/05_clase/)
