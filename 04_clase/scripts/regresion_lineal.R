@@ -62,6 +62,8 @@ arboles %>%
 
 # lm(formula = y ~ x, data = mis_datos)
 
+# lm(formula = y ~ x1 + C*X2, data = mis_datos)
+
 modelo_arboles_cherry <- lm(altura_m ~ circunferencia_m, data = arboles)
 
 modelo_arboles_cherry
@@ -111,9 +113,14 @@ broom::glance(modelo_arboles_cherry) # mas detalle summary(), incluye r2
 
 # Usemos el modelo que creamos con otros datos ----------------------------
 
-arboles_nuez <- data.frame("altura_m" = c(21.8, 29.4, 35.5, 46.3, 37.5, 20.5, 21.2, 24.5),
-                             "circunferencia_m" = c(0.11, 0.22, 0.32, 0.48, 0.49, 0.19, 0.09, 0.19),
-                             "arbol_tipo" = c("a", "a", "a", "a", "b", "b", "b", "b"))
+# Ordenar codigo: Ctr Shit A
+
+arboles_nuez <-
+  data.frame(
+    "altura_m" = c(21.8, 29.4, 35.5, 46.3, 37.5, 20.5, 21.2, 24.5),
+    "circunferencia_m" = c(0.11, 0.22, 0.32, 0.48, 0.49, 0.19, 0.09, 0.19),
+    "arbol_tipo" = c("a", "a", "a", "a", "b", "b", "b", "b")
+  )
 
 glimpse(arboles_nuez)
 
@@ -141,12 +148,14 @@ cor(arboles_nuez_analisis$altura_ml_cherry,
 # hagamos cor() y otras funciones a mano usando tidy y grupos -------------
 
 arboles_nuez_ml_cherry <-
-arboles_nuez_analisis %>% 
-group_by(arbol_tipo) %>% 
-summarise(RMSE = mean((altura_m - altura_ml_cherry)^2),
-         r.pearson = cor(altura_ml_cherry,altura_m),
-         r.cuadrado = sqrt(cor(altura_ml_cherry,altura_m)),
-         prediccion_modelo = "altura_ml_cherry")
+  arboles_nuez_analisis %>%
+  group_by(arbol_tipo) %>% 
+  summarise(
+    RMSE = mean((altura_m - altura_ml_cherry) ^ 2),
+    r.pearson = cor(altura_ml_cherry, altura_m),
+    r.cuadrado = sqrt(cor(altura_ml_cherry, altura_m)),
+    prediccion_modelo = "altura_ml_cherry"
+  )
 
 # Que tal si hacemos un nuevo lm() por cada tipo de arbol -----------------
 
@@ -158,9 +167,11 @@ arboles_nuez_ml <-
   # extraemos metricas (glance_ml)
   mutate(
     ml_nuez = map(datos,
-             ~ lm(altura_m ~
-                    circunferencia_m, data = .)),
-    altura_ml_nuez = map2(.x = ml_nuez, .y = datos, ~predict(object = .x, newdata = .y)),
+                  ~ lm(altura_m ~
+                         circunferencia_m,
+                       data = .)),
+    altura_ml_nuez = map2(.x = ml_nuez, .y = datos,
+                          ~ predict(object = .x, newdata = .y)),
     tidy_ml = map(ml_nuez , tidy),
     glance_ml = map(ml_nuez , glance)
   )

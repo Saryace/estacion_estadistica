@@ -3,7 +3,6 @@
 
 library(tidyverse)
 
-
 # Creamos un vector -------------------------------------------------------
 
 uno_al_diez <- 1:10
@@ -14,23 +13,35 @@ uno_al_diez_df <- data.frame("datos" = 1:10,
                                 "tipo" = c("a", "a", "a", "a", "a",
                                            "b", "b", "b", "b", "b"))
 
+uno_al_doce_df <- data.frame("datos" = 1:12,
+                             "tipo" = c("a", "a", "a", "a", "a",
+                                        "b", "b", "b", "b", "b"))
+
 # Creamos una lista -------------------------------------------------------
 
-uno_al_diez_lista <- list("datos" = 1:10,
-                                "tipo" = c("a", "a", "a", "a", "a",
-                                           "b", "b", "b", "b", "b"))
+uno_al_diez_lista <- list(
+  "datos" = 1:10,
+  "tipo" = c("a", "a", "a", "a", "a",
+             "b", "b", "b", "b", "b")
+)
 
+uno_al_doce_lista <- list(
+  "datos" = 1:12,
+  "tipo" = c("a", "a", "a", "a", "a",
+             "b", "b", "b", "b", "b")
+)
 
 # Creamos una funcion -----------------------------------------------------
 
 por_diez <- function(x) x*10
-
 
 # Revisamos a funcion map() -----------------------------------------------
 
 purrr::map(uno_al_diez, por_diez)
 
 purrr::map_dbl(uno_al_diez, por_diez)
+
+purrr::map(uno_al_diez_lista, por_diez) # error
 
 purrr::map(uno_al_diez_lista$datos, por_diez)
 
