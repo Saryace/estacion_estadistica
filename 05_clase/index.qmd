@@ -1,0 +1,317 @@
+---
+title: "Clase 05"
+subtitle: "Estadística Descriptiva desde 0 en R"
+author: "Sara Acevedo"
+title-slide-attributes:
+    data-background-image: "img/mint-tea.jpeg"
+    data-background-size: contain
+    data-background-opacity: "0.5"
+format:
+  revealjs: 
+    slide-number: true
+    theme: [default, mi_tema.scss]
+    auto-stretch: false
+from: markdown+emoji
+execute:
+  echo: true
+---
+
+# [Bienvenidos a la clase 05!]{style="color: white;float:center;text-align:left;"} {background-color="#56cc9d"} 
+
+## Qué vimos la clase anterior?
+
+::: {.incremental}
+
+- Regresion lineal
+- Automatizacion de regresión
+- Continuación de ggplot
+- Uso del paquete broom
+:::
+
+## Qué aprenderemos en esta clase :computer:
+
+::: {.incremental}
+
+- Varianza y ANOVA
+- Datos categorizados (factores)
+- Uso del paquete broom
+- Exportar estadistisca descriptiva a Word y PDF
+
+:::
+
+## Código y materiales
+
+::: info-box
+
+El repositorio lo puedes encontrar acá:
+
+<center>
+<i class="fa-solid fa-book"></i> [Repositorio en github](https://github.com/Saryace/estacion_estadistica)
+</center>
+
+:::
+
+## Estadística descriptiva
+
+* Medidas de tendencia central
+  * Describen el centro de los datos y suelen estar representadas por la media, la mediana y la moda.
+* Medidas de dispersión
+  * El grado en que una distribución se estira o aprieta se mide por la dispersión o variabilidad. Las más populares son la desviación estándar, la varianza y el rango intercuartil.
+
+
+##
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+![](img/normal.png)
+:::
+
+::: {.column width="50%"}
+
+- Ya vimos como usar R para realizar pruebas t-test para comparar las medias de dos grupos de casos independientes
+
+- Revisamos como evaluar normalidad
+
+- Arte por [Allison Horst](https://twitter.com/allison_horst) 
+
+:::
+
+::::
+
+## 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+![](img/normal.png)
+:::
+
+::: {.column width="50%"}
+
+Ahora veremos situaciones donde debemos comparar más grupos
+
+* Diferentes especies de animales = diferente tamaño de partes del cuerpo?
+
+* Tiempo de espera en urgencia en hospitales?
+
+* Influye la presencia de otras personas en el tiempo que tarda una persona en ayudar a alguien en apuros?
+
+* [ANOVA by Rebecca Barter](https://www.rebeccabarter.com/blog/2017-02-17-anova/)
+
+:::
+
+::::
+
+## 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+![](img/normal.png)
+:::
+
+::: {.column width="50%"}
+
+¿Qué ocurre cuando queremos comprobar las diferencias de medias entre dos o más grupos independientes? En este caso, podemos utilizar el `análisis de varianza unidireccional`, comúnmente conocido como `ANOVA unidireccional`. En inglés one-way ANOVA
+
+:::
+
+::::
+
+## En un ANOVA unidireccional siempre intervienen dos variables:
+
+- La variable dependiente, a veces también llamada variable de respuesta. Debe ser una variable `numérica continua`.
+- La variable independiente. Debe ser una variable `categórica` con dos o más categorías.
+
+## La funcion de R para ANOVA es  `aov()` 
+
+```{r}
+library(tidyverse)
+library(datos)
+
+glimpse(pinguinos)
+
+```
+
+## La sintaxis de `aov()` es similar a `lm()`
+
+```{r}
+modelo_anova <- aov(largo_aleta_mm ~ especie, data = pinguinos)
+
+summary(modelo_anova)
+```
+
+## Veamos que necesitamos para ANOVA
+
+* Entender que son los factores `<fct>`
+* Revisar el concepto de varianza y media
+* Extraer los datos del output de R
+
+## Entender que son los factores `<fct>`
+
+- En R, los factores se usan para trabajar con variables categóricas (conjunto fijo y conocido de valores posibles)
+
+- Para trabajar con factores, vamos a usar el paquete forcats, que es parte del tidyverse. Este paquete provee herramientas para lidiar con variables categóricas 
+
+## Entender que son los factores `<fct>`
+
+Necesito crear una variable de estaciones del año
+
+```{r}
+estaciones <- c("verano",
+                "otoño",
+                "invierno",
+                "primavera")
+class(estaciones)
+```
+Si creo una lista de `<chr>` tengo dos problemas: errores de tipeo y no puedo fijar orden
+
+## Entender que son los factores `<fct>`
+
+```{r}
+estaciones_b <- c("veramo",
+                "otoño",
+                "invierno",
+                "prinavera")
+estaciones == estaciones_b
+```
+
+```{r}
+sort(estaciones)
+```
+## Entender que son los factores `<fct>`
+
+Para crear factores, debemos crear niveles
+```{r}
+niveles_estaciones <- c("verano",
+                "otoño",
+                "invierno",
+                "primavera")
+
+estaciones_fct <- factor(estaciones, levels = niveles_estaciones)
+
+estaciones_fct
+```
+
+## Entender que son los factores `<fct>`
+
+Ahora cualquier valor extra sera transformado a `NA`
+```{r}
+estaciones_fct_b <- factor(estaciones_b, levels = niveles_estaciones)
+
+estaciones_fct_b
+```
+Para mas info de factores, revisar [R4DS](https://es.r4ds.hadley.nz/factores.html)
+
+## Revisar el concepto de varianza y media en `ANOVA`
+
+Si `ANOVA` es análisis de varianza, porque trabajamos con las medias?
+
+ANOVA nos dice si la varianza de las medias es grande. Sin embargo, la variabilidad que observamos entre las medias sólo tiene sentido en relación con la varianza global de los datos. 
+
+## Revisar el concepto de varianza y media en `ANOVA`
+
+Aquí entran en juego dos tipos de varianza
+
+- dentro de un grupo: la varianza de las observaciones individuales dentro de un grupo
+
+- entre grupos: la varianza entre las medias de los grupos.
+
+## Revisar el concepto de varianza y media en `ANOVA`
+```{r}
+promedio_global <-
+pinguinos %>% 
+  drop_na() %>% 
+  summarise_at(vars(largo_aleta_mm),
+               list(promedio = mean))
+
+promedio_por_especie <-
+pinguinos %>% 
+  group_by(especie) %>% 
+  drop_na() %>% 
+  summarise_at(vars(largo_aleta_mm),
+               list(promedio = mean))
+
+promedio_global
+promedio_por_especie 
+```
+
+## Revisar el concepto de varianza y media en `ANOVA`
+```{r}
+ggplot(data = pinguinos, aes(x = especie, y = largo_aleta_mm)) +
+  geom_boxplot(aes(color = especie), width = 0.3, show.legend = FALSE) +
+  geom_hline(aes(yintercept = 201)) +
+  labs(x = "Especie",
+       y = "Largo aleta (mm)")
+```
+## Revisar el concepto de varianza y media en `ANOVA`
+
+La idea básica es que si la variabilidad entre los grupos es mayor que la variabilidad dentro de los grupos, entonces tenemos pruebas de que las diferencias entre los grupos no reflejan simplemente ruido aleatorio.
+
+## Revisar el concepto de varianza y media en `ANOVA`
+
+Esta prueba no nos dice exactamente qué grupos son significativamente diferentes entre sí, ni cuántos; sólo si al menos un grupo es diferente de los demás. 
+
+## Extraer los datos del output de R
+
+Nuevamente el paquete broom nos ayuda a manejar los datos desde las listas que entrega R
+
+```{r}
+library(broom)
+
+tidy(modelo_anova)
+
+glance(modelo_anova)
+```
+    
+
+## Como exportar datos de aov() y otros a Word y PDF
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+- Se puede combinar texto y código con `knit()` usando RMarkdown 
+
+- Se puede combinar texto y código con `quarto` 
+
+- Podemos exportar tablas para Excel 
+
+- Podemos exportar figuras como .png o .jpeg
+
+:::
+
+::: {.column width="50%"}
+
+![](img/knit.png)
+  
+:::
+
+::::
+
+## Ahora nos damos un break
+```{r}
+#| echo: true
+library(countdown)
+
+countdown(minutes = 10)
+```
+
+# [{{< fa brands r-project size=1.4xl >}} Ahora abrimos RStudio]{style="color:white;float:right;text-align:right;"} {background-color="#56cc9d"}
+
+## Qué aprendimos en esta clase :computer:
+
+::: {.incremental}
+
+- Varianza y ANOVA
+- Datos categorizados (factores)
+- Uso del paquete broom
+- Exportar estadistisca descriptiva a Word y PDF
+
+:::
+
+# [{{< fa brands r-project size=1.4xl >}} Muchas gracias por tomar este curso :brain: :fire:]{style="color:white;float:right;text-align:right;"} {background-color="#56cc9d"}

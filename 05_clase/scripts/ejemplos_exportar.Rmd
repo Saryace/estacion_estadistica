@@ -1,0 +1,47 @@
+---
+title: "Ejemplo de uso de RMarkdown para estadística descriptiva"
+author: "S.Acevedo"
+date: "2022-12-14"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Son los machos mas pesados que las hembras?
+
+Esta hipótesis se evaluará por medio de estadística descriptiva y análisis t-test
+
+```{r cars}
+library(tidyverse) # primero cargaremos las librerias necesarias
+library(datos)
+# Luego calculamos para la variable masa_corporal_g:
+# el promedio, desviación  estándar y error estándar
+analisis_masa_por_sexo <-
+pinguinos %>%
+  group_by(sexo) %>%
+  drop_na() %>% 
+  summarise(promedio = mean(masa_corporal_g), #promedio
+            sd = sd(masa_corporal_g), # desv estandar
+            n = n(), # contar por grupos
+            se = sd/sqrt(n)) # error estandar:
+```
+
+\pagebreak
+
+## Gráfico de masa corporal para machos y hembras
+
+El promedio global corresponde a `r mean(pinguinos$masa_corporal_g, na.rm = TRUE)`. El gráfico muestra las diferentes de masa entre machos y hembras
+
+```{r pressure, echo=FALSE}
+analisis_masa_por_sexo %>% 
+  ggplot(aes(x = sexo, y = promedio, fill = sexo)) +
+  geom_col() +
+  geom_errorbar(aes(ymin = promedio - se, ymax = promedio + se),
+                width=.2)
+```
+
+
+
+`echo = FALSE` evita mostrar el código

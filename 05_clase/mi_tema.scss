@@ -1,0 +1,69 @@
+/*-- scss:defaults --*/
+
+$body-bg: #fff;
+$body-color: #4e3629;
+$link-color: #e83e8c;
+$presentation-heading-color: #20c997;
+$code-color: #e83e8c;
+$code-block-bg: #fff;
+$code-block-border-color: #000000;
+
+/*-- scss:rules --*/
+
+.title {
+  font-size: 100px !important;
+  color: red !important;
+}
+
+.reveal .slide-number {
+  color: $link-color;
+}
+
+.reveal .footer {
+  font-size: 0.35em !important;
+  text-align: right !important;
+}
+
+.reveal .slides section .fragment.semi-fade-out {
+	opacity: 1;
+	visibility: inherit;
+
+	&.visible {
+		opacity: 0.25;
+		visibility: inherit;
+	}
+}
+
+.reveal .slide-logo {
+  display: block;
+  position: fixed;
+  bottom: unset !important;
+  right: unset !important;
+  top: 5px;
+  left: 12px;
+  height: 250px !important;
+  width: 250x !important;
+  max-width: unset !important;
+  max-height: unset !important;
+}
+
+.sectionhead {
+  font-size: 1em;
+  text-align: center;
+  color: $presentation-heading-color;
+  font-family: $presentation-heading-font;
+  background-color: $body-bg;
+  margin: 1px;
+  padding: 2px 2px 2px 2px;
+  width: 120px;
+  border-left: 10px solid;
+}
+
+.blackbox {
+  color: #000000;
+  background-color: transparent;
+  margin: 1px;
+  padding: 5px 2px 5px 2px;
+  height: 205px;
+  border: 2px solid;
+}
