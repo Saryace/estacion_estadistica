@@ -24,7 +24,6 @@ library(broom) # extraer informacion
 
 glimpse(pinguinos)
 
-
 # Resumen de lo visto en el curso -----------------------------------------
 
 # Pregunta:
@@ -76,7 +75,23 @@ hembras <- pinguinos %>%
 machos <- pinguinos %>%
   filter(sexo == "macho")
 
+#  al intentar armar un dataframe tenemos problemas -----------------------
+
+# data.frame(hembras = hembras,
+#            machos = machos)
+
+# Podemos trabajar por separado -------------------------------------------
+
 t.test(hembras$masa_corporal_g, machos$masa_corporal_g,
+       paired = FALSE)
+
+# O usando listas ---------------------------------------------------------
+
+lista_machos_vs_hembras <- list(hembras = hembras,
+     machos = machos) # creamos una lista
+
+t.test(lista_machos_vs_hembras$hembras$masa_corporal_g, #accedemos usando $
+       lista_machos_vs_hembras$machos$masa_corporal_g,
        paired = FALSE)
 
 # Ahora codigo de ANOVA ---------------------------------------------------
@@ -97,7 +112,7 @@ pinguinos %>%
 # la media total del largo de aleta es 201.1 mm
 
 plot_aleta_especie <-
-ggplot(data = pinguinos %>% drop_na(), # podemos operar dentro de ggplot
+ggplot(data = pinguinos %>% drop_na(), # podemos operar dentro de ggplot!
        aes(x = especie, y = largo_aleta_mm)) +
   geom_boxplot(aes(color = especie), width = 0.3,
                show.legend = FALSE) +
@@ -142,7 +157,21 @@ write.csv(tabla_tukey_ordenada, "05_clase/datos_exportados/tabla_tukey.csv",
 
 # 2. Guardar ggplot como imagen
 
-ggsave("05_clase/img/aleta_especie.png",
-       plot_aleta_especie)
+ggsave("05_clase/img/aleta_especie.png", # poner el path
+       plot_aleta_especie) # aca el objeto
 
-# 3. Para ver como hacer codigo + texto, abrir el archivo
+# 3. Para ver como hacer codigo + texto, abrir el archivo ejemplos_exportar.Rmd
+
+
+# Extra: Regresion lineal -------------------------------------------------
+
+ggplot(pinguinos %>% drop_na(), aes(largo_pico_mm, largo_aleta_mm)) +
+  geom_point() +
+  geom_smooth(method = "lm") 
+
+pinguinos %>% 
+  drop_na() %>% 
+  group_by(sexo, especie) %>% 
+  summarise(cor.pearson = cor(largo_pico_mm,largo_aleta_mm)) 
+
+
