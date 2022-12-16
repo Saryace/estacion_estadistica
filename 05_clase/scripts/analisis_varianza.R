@@ -20,7 +20,7 @@ library(broom) # extraer informacion
 
 # Cargamos los datos de pinguinos -----------------------------------------
 
-# revisamos que las variables cateegorias sean <fct>
+# revisamos que las variables categorias sean <fct>
 
 glimpse(pinguinos)
 
@@ -31,7 +31,7 @@ glimpse(pinguinos)
 
 pinguinos %>%
   group_by(sexo) %>%
-  summarise(mean = mean(masa_corporal_g), #promedio
+  summarise(promedio = mean(masa_corporal_g), #promedio
             sd = sd(masa_corporal_g), # desv estandar
             n = n(), # contar por grupos
             se = sd/sqrt(n)) # error estandar
@@ -52,8 +52,9 @@ analisis_masa_por_sexo <-
 analisis_masa_por_sexo %>% 
   ggplot(aes(x = sexo, y = promedio, fill = sexo)) +
   geom_col() +
-  geom_errorbar(aes(ymin = promedio - se, ymax = promedio + se),
-                width=.2)
+  geom_errorbar(aes(ymin = promedio - se, # operaciones dentro 
+                    ymax = promedio + se),
+                width = .2) # el ancho de la columna
 
 # Hacemos un t-test -------------------------------------------------------
 
@@ -76,7 +77,7 @@ machos <- pinguinos %>%
   filter(sexo == "macho")
 
 #  al intentar armar un dataframe tenemos problemas -----------------------
-
+# 
 # data.frame(hembras = hembras,
 #            machos = machos)
 
@@ -87,8 +88,9 @@ t.test(hembras$masa_corporal_g, machos$masa_corporal_g,
 
 # O usando listas ---------------------------------------------------------
 
-lista_machos_vs_hembras <- list(hembras = hembras,
-     machos = machos) # creamos una lista
+lista_machos_vs_hembras <-
+  list(hembras = hembras,
+       machos = machos) # creamos una lista
 
 t.test(lista_machos_vs_hembras$hembras$masa_corporal_g, #accedemos usando $
        lista_machos_vs_hembras$machos$masa_corporal_g,
@@ -97,12 +99,12 @@ t.test(lista_machos_vs_hembras$hembras$masa_corporal_g, #accedemos usando $
 # Ahora codigo de ANOVA ---------------------------------------------------
 
 # Pregunta:
-# ¿Tienen las diferentes especies el mismo o diferente largo aleta? 
+# ¿Tienen las diferentes especies el mismo o diferente largo medio de aleta? 
 
 pinguinos %>%
   drop_na() %>% 
-  group_by(especie) %>%
-  summarise(mean = mean(largo_aleta_mm), #promedio
+  group_by(especie) %>% #especie
+  summarise(promedio = mean(largo_aleta_mm), #promedio
             sd = sd(largo_aleta_mm), # desv estandar
             n = n(), # contar por grupos
             se = sd/sqrt(n)) # error estandar
@@ -121,6 +123,7 @@ ggplot(data = pinguinos %>% drop_na(), # podemos operar dentro de ggplot!
        y = "Largo aleta (mm)")
 
 plot_aleta_especie
+
 # ANOVA -------------------------------------------------------------------
 
 anova_aleta <- aov(largo_aleta_mm ~ especie, data = pinguinos %>% drop_na())
@@ -128,7 +131,11 @@ anova_aleta <- aov(largo_aleta_mm ~ especie, data = pinguinos %>% drop_na())
 # histograma de residuos
 hist(anova_aleta$residuals) # revisamos normalidad de residuos
 
+summary(anova_aleta) # version r base
+
 tidy(anova_aleta) # revisamos p.value de la hipotesis (todas las medias iguales)
+
+datos_tidy_aleta <- tidy(anova_aleta)
 
 # Como el p.value es menos a 0.05, podemos concluir que al menos una especie
 # es diferente de las demás en cuanto a la longitud de las aletas 
@@ -136,7 +143,7 @@ tidy(anova_aleta) # revisamos p.value de la hipotesis (todas las medias iguales)
 
 # TukeyHSD ----------------------------------------------------------------
 
-# Si un ANOVAresulta significativo, implica que al menos dos
+# Si un ANOVA resulta significativo, implica que al menos dos
 # de las medias comparadas son significativamente distintas entre sí, pero no
 # se indica cuáles. Para identificarlas hay que comparar dos a dos las medias
 # de todos los grupos introducidos en el análisis mediante un t-test u otro test
@@ -152,12 +159,13 @@ tabla_tukey_ordenada <- tidy(tukey_aleta)
 
 # 1. Guardar csv y pegar word
 
-write.csv(tabla_tukey_ordenada, "05_clase/datos_exportados/tabla_tukey.csv",
-          row.names = F) # no queremos los numeros de fila
+write.csv(tabla_tukey_ordenada,
+          "05_clase/datos_exportados/tabla_tukey.csv",
+          row.names = FALSE) # no queremos los numeros de fila
 
 # 2. Guardar ggplot como imagen
 
-ggsave("05_clase/img/aleta_especie.png", # poner el path
+ggsave("05_clase/img/aleta_especie.png", # poner el directorio
        plot_aleta_especie) # aca el objeto
 
 # 3. Para ver como hacer codigo + texto, abrir el archivo ejemplos_exportar.Rmd
@@ -165,13 +173,29 @@ ggsave("05_clase/img/aleta_especie.png", # poner el path
 
 # Extra: Regresion lineal -------------------------------------------------
 
-ggplot(pinguinos %>% drop_na(), aes(largo_pico_mm, largo_aleta_mm)) +
+ggplot(pinguinos %>% drop_na(), # operar dentro de ggplot
+       aes(x = largo_pico_mm, y = largo_aleta_mm)) +
   geom_point() +
-  geom_smooth(method = "lm") 
+  geom_smooth(method = "lm") +
+  ylim(125,250) +
+  xlim(0,70)
 
+# Modelos lm() son independientes
+
+modelo_ml_pingui <- lm(largo_aleta_mm ~  largo_pico_mm,
+                       data = pinguinos %>% drop_na())
+
+# Correlacion global
+pinguinos %>% 
+  drop_na() %>% 
+  summarise(cor.pearson = cor(largo_pico_mm,largo_aleta_mm)) 
+
+# Correlacion por grupos (sexo y especie)
 pinguinos %>% 
   drop_na() %>% 
   group_by(sexo, especie) %>% 
   summarise(cor.pearson = cor(largo_pico_mm,largo_aleta_mm)) 
+
+# Los resultados globales (r de 0.65) son diferentes a los agrupados
 
 

@@ -11,9 +11,18 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Son los machos mas pesados que las hembras?
 
-Esta hipótesis se evaluará por medio de estadística descriptiva y análisis t-test
+## Esta hipótesis se evaluará por medio de estadística descriptiva y análisis t-test
 
-```{r cars}
+- Hola
+- Chile
+
+* Hola
+* Chile
+
+1. Hola
+2. Chile
+
+```{r}
 library(tidyverse) # primero cargaremos las librerias necesarias
 library(datos)
 # Luego calculamos para la variable masa_corporal_g:
@@ -34,14 +43,16 @@ pinguinos %>%
 
 El promedio global corresponde a `r mean(pinguinos$masa_corporal_g, na.rm = TRUE)`. El gráfico muestra las diferentes de masa entre machos y hembras
 
-```{r pressure, echo=FALSE}
+```{r, echo=FALSE}
 analisis_masa_por_sexo %>% 
   ggplot(aes(x = sexo, y = promedio, fill = sexo)) +
   geom_col() +
   geom_errorbar(aes(ymin = promedio - se, ymax = promedio + se),
-                width=.2)
+                width=.2) +
+  labs(x = "sexo", y = "promedio \n en gramos (g)") 
 ```
 
+Comentarios
+1. `echo = FALSE` evita mostrar el código
+2. Usando ``\n`` podemos hacer "enter" dentro de ggplot
 
-
-`echo = FALSE` evita mostrar el código
